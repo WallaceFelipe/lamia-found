@@ -43,7 +43,8 @@
 																  'duracaoprevista'=>$duracaoprevista,
 																  'valor'=>$valor)); 
 		}
-		public function read($codigo,$nome,$categoria){
+	   
+	   public function read($codigo=NULL,$nome=NULL,$categoria){
 				$conexao  = new Conexao();
 				if($codigo!=NULL){				
 					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
@@ -74,10 +75,23 @@
 												'} ]}';
 					return $json;
 				}
+				$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+										  ->from('projeto')
+										  ->where('categoria = '.$categoria)
+										  ->executeNGet(); 
 				$json ='{"projetos" : [';
 				foreach($projetos as $projeto){
-					$json += projeto				
-				}	
+					$json +='{ "nome" : "'.projeto['nome'].'"'.
+							   ' "categoria" : "'.projeto['categoria'].'"'.
+							   ' "valor" : "'.projeto['valor'].'"'.
+							   ' "duracaoprevista" :"'.projeto['duracaoprevista'].'"'.
+							  '}'; 	 				
+				}
+				$json += ']}'	
+		}
+		
+		public function update($nome=NULL, $categoria=NULL,$duracaoprevista=NULL,$valor=NULL){
+		
 		}
 		
 	}
