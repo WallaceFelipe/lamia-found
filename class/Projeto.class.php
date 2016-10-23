@@ -102,5 +102,7 @@
 			$conexao->update('projeto', $update_values,$codigo);	
 		}
 		
-	}
+		public function delete($codigo==NULL) {
+			if($codigo!=NULL) $conexao->execute('DELETE FROM projeto WHERE codigo = '.$codigo);
+		}
 	
