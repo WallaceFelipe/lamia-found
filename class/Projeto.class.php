@@ -3,6 +3,7 @@
 	class Projeto{
 	
    private $id;
+   private $codigo;
 	private $nome;
 	private $categoria;
 	private $status; 
@@ -33,11 +34,59 @@
         return null;		
 		}
 		
-		public function create($nome,$categoria,$duracaoprevista,$valor){
-			$conexao = new Conexao();			
+		public function create($codigo,$nome,$categoria,$duracaoprevista,$valor){
+			$conexao = new Conexao();		
 			return $conexao->insert('projeto', array('nome'=>$nome,
-			'categoria'=>$categoria,'status'=>'candidato',
-			'duracaoprevista'=>$duracaoprevista,'valor'=>$valor)); 
+																  'codigo'=>$codigo,
+																  'categoria'=>$categoria,
+																  'status'=>'candidato',
+																  'duracaoprevista'=>$duracaoprevista,
+																  'valor'=>$valor)); 
+		}
+		public function read($codigo=NULL,$nome=NULL,$categoria){
+				$conexao  = new Conexao();
+				if($codigo!=NULL){				
+					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+										  ->from('projeto')
+										  ->where('codigo = '.$codigo)
+										  ->limit(1)
+										  ->executeNGet(); 
+					$json ='{"projetos" : [{'.
+													' "nome" : "'.projetos['nome'].'"'.
+													' "categoria" : "'.projetos['categoria'].'"'.
+													' "valor" : "'.projetos['valor'].'"'.
+													' "duracaoprevista" : "'.projetos['duracaoprevista'].'"'.
+												'} ]}';
+					return $json;
+				}
+				
+				if($nome!=NULL){				
+					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+										  ->from('projeto')
+										  ->where('nome = '.$nome)
+										  ->limit(1)
+										  ->executeNGet(); 
+					$json ='{"projetos" : [{'.
+													' "nome" : "'.projetos['nome'].'"'.
+													' "categoria" : "'.projetos['categoria'].'"'.
+													' "valor" : "'.projetos['valor'].'"'.
+													' "duracaoprevista" : "'.projetos['duracaoprevista'].'"'.
+												'} ]}';
+					return $json;
+				}
+				$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+										  ->from('projeto')
+										  ->where('categoria = '.$categoria)
+										  ->executeNGet(); 
+				$json ='{"projetos" : [';
+				foreach($projetos as $projeto){
+					$json +='{ "nome" : "'.projeto['nome'].'"'.
+							   ' "categoria" : "'.projeto['categoria'].'"'.
+							   ' "valor" : "'.projeto['valor'].'"'.
+							   ' "duracaoprevista" :"'.projeto['duracaoprevista'].'"'.
+							  '}'; 	 				
+				}
+				$json += ']}'	
 		}
 		
 	}

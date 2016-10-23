@@ -25,6 +25,7 @@ PRIMARY KEY(idusuario));
 CREATE TABLE projeto(
 id INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(30) NOT NULL,
+codigo CHAR(6) UNIQUE,
 categoria SET('pesquisa','competicaotecnologica','inovacaoensino','manutencaoreforma','pequenasobras') NOT NULL,
 status SET('candidato','aprovado','reprovado','finalizado') DEFAULT 'candidato',
 duracaoprevista varchar(10) NOT NULL,
