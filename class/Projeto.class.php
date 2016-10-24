@@ -1,6 +1,7 @@
 <?php 
-	include("class/conexao.class.php");
-	
+
+	require_once("class/Conexao.class.php");
+
 	class Projeto{
 	
 		private $id;
@@ -16,7 +17,7 @@
 	
 		public function __construct(){}
 		
-		public function __set(){
+		public function __set($name,$value){
 			$this->data[$name] = $value;		
 		}
 		
@@ -47,6 +48,7 @@
 	   
 	   public function sql_read($codigo=NULL,$nome=NULL,$categoria){
 				$conexao  = new Conexao();
+				$json;
 				if($codigo!=NULL){				
 					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
 										  ->from('projeto')
@@ -59,7 +61,7 @@
 													' "valor" : "'.projetos['valor'].'"'.
 													' "duracaoprevista" : "'.projetos['duracaoprevista'].'"'.
 												'} ]}';
-					return $json;
+					
 				}
 				
 				if($nome!=NULL){				
@@ -74,24 +76,28 @@
 													' "valor" : "'.projetos['valor'].'"'.
 													' "duracaoprevista" : "'.projetos['duracaoprevista'].'"'.
 												'} ]}';
-					return $json;
+					
 				}
-				$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
-										  ->from('projeto')
-										  ->where('categoria = '.$categoria)
-										  ->executeNGet(); 
-				$json ='{"projetos" : [';
-				foreach($projetos as $projeto){
-					$json +='{ "nome" : "'.projeto['nome'].'"'.
-							   ' "categoria" : "'.projeto['categoria'].'"'.
-							   ' "valor" : "'.projeto['valor'].'"'.
-							   ' "duracaoprevista" :"'.projeto['duracaoprevista'].'"'.
-							  '}'; 	 				
+				else{
+					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+											  ->from('projeto')
+											  ->where('categoria = '.$categoria)
+											  ->executeNGet(); 
+					$json ='{"projetos" : [';
+					foreach($projetos as $projeto){
+						$json +='{ "nome" : "'.projeto['nome'].'"'.
+								   ' "categoria" : "'.projeto['categoria'].'"'.
+								   ' "valor" : "'.projeto['valor'].'"'.
+								   ' "duracaoprevista" :"'.projeto['duracaoprevista'].'"'.
+								  '}'; 	 				
+					}
+					$json += ']}';
 				}
-				$json += ']}'	
+				return $json;	
 		}
 		
-		public function sql_update($codigo,$nome=NULL, $categoria=NULL,$duracaoprevista=NULL,$valor=NULL){
+		public function sql_update($codigo,$nome=NULL,
+					 $categoria=NULL,$duracaoprevista=NULL,$valor=NULL){
 			$update_values = array();
 			
 			if($nome!=NULL) array_push($update_values,'nome',$nome);
@@ -103,8 +109,9 @@
 			$conexao->update('projeto', $update_values,$codigo);	
 		}
 		
-		public function sql_delete($codigo==NULL) {
+		public function sql_delete($codigo=NULL) {
 			if($codigo!=NULL) $conexao->execute('DELETE FROM projeto WHERE codigo = '.$codigo);
 		}
 		
 	}
+?>
