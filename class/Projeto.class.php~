@@ -34,7 +34,7 @@
         return null;		
 		}
 		
-		public function create($codigo,$nome,$categoria,$duracaoprevista,$valor){
+		public function sql_create($codigo,$nome,$categoria,$duracaoprevista,$valor){
 			$conexao = new Conexao();		
 			return $conexao->insert('projeto', array('nome'=>$nome,
 																  'codigo'=>$codigo,
@@ -44,7 +44,7 @@
 																  'valor'=>$valor)); 
 		}
 	   
-	   public function read($codigo=NULL,$nome=NULL,$categoria){
+	   public function sql_read($codigo=NULL,$nome=NULL,$categoria){
 				$conexao  = new Conexao();
 				if($codigo!=NULL){				
 					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
@@ -90,7 +90,7 @@
 				$json += ']}'	
 		}
 		
-		public function update($codigo,$nome=NULL, $categoria=NULL,$duracaoprevista=NULL,$valor=NULL){
+		public function sql_update($codigo,$nome=NULL, $categoria=NULL,$duracaoprevista=NULL,$valor=NULL){
 			$update_values = array();
 			
 			if($nome!=NULL) array_push($update_values,'nome',$nome);
@@ -102,5 +102,8 @@
 			$conexao->update('projeto', $update_values,$codigo);	
 		}
 		
+		public function sql_delete($codigo==NULL) {
+			if($codigo!=NULL) $conexao->execute('DELETE FROM projeto WHERE codigo = '.$codigo);
+		}
+		
 	}
-	

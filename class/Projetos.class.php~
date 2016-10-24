@@ -1,0 +1,14 @@
+<?php
+	include("class/Projeto.php");
+	
+	class Projetos{
+	
+	public function cadastro(){
+			
+	
+	}
+			
+	
+	
+	
+	}
