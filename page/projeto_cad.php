@@ -1,11 +1,18 @@
 <?php
 
-include("class/Projeto.class.php");
+require_once("class/Projeto.class.php");
+$codigoErr = '';
 
-if (isset($_POST['cadastrar'])) {
-
-
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["codigo"])) {
+    $codigoErr = "Name is required";
+  } else {
+    $codigo = test_input($_POST["name"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z 0-9 ]*$/",$codigo)) {
+      $codigoErr = "Digite letras e números para esse campo";
+    }
+  }
 }
 
 ?>
@@ -30,74 +37,22 @@ if (isset($_POST['cadastrar'])) {
 					<div class="panel-heading">Nome da tabela</div>
 					<div class="panel-body">
 
-                    <form action='' onsubmit="" method="post">
+                    <form class="form-group" action="projeto_cad.php" onsubmit="" method="post">
 
-                        <div class="form-group">
-                            <label>Login</label>
-                            <input type="text" name="login" class="form-control">
-                        </div>
                         
-                        <div class="form-group">
-                            <label>Senha</label>
-                            <input type="password" name="senha" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Repita a Senha</label>
-                            <input type="password" name="login" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Nome Completo</label>
-                            <input type="text" name="nome" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>CPF</label>
-                            <input type="text" name="cpf" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>País</label>
-                            <input type="text" name="pais" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Estado</label>
-                            <input type="text" name="Estado" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Cidade</label>
-                            <input type="text" name="cidade" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Endereço</label>
-                            <input type="text" name="endereco" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Data de Nascimento</label>
-                            <input type="text" name="datanascimento" class="datepicker form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>E-mail</label>
-                            <input type="text" name="email" class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Tipo</label>
-                            <select name="tipo" class="form-control">
-                                <option value="gestordeprojeto">Gestor de Projetos</option>
-                                <option value="avaliadordeprojeto">Avaliador de Projetos</option>
-                                <option value="financiadoracademico">Financiador Acadêmico</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group hidden">
-                            <label>Catedoria</label>
+                            <label>Código</label>
+                            <input type="text" name="codigo" class="form-control" value="<?php echo $codigoErr; ?>" required>
+                       
+                            <label>Nome</label>
+                            <input type="text" name="nome" class="form-control" required>
+                        
+                            <label>Duracao Prevista (dias)</label>
+                            <input type="number" name="duracaoprevista" class="form-control" required>
+                        
+                            <label>Valor</label>
+                            <input type="number" name="valor" class="form-control" required>
+                        
+                            <label>Categoria</label>
                             <select name="categoria" class="form-control">
                                 <option value="false" default>...</option>
                                 <option value="pesquisa">Pesquisa</option>
@@ -106,8 +61,7 @@ if (isset($_POST['cadastrar'])) {
                                 <option value="manutencaoreforma">Manutenção e Reforma</option>
                                 <option value="pequenasobras">Pequenas Obras</option>
                             </select>
-                        </div>
-
+                        
                         <button type="submit" name="enviar" value="true" onclick="enviar_formulario()" class="btn btn-success">Cadastrar</button>
                     </form>
 
