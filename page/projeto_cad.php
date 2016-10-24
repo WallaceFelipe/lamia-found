@@ -3,45 +3,17 @@
 require_once("class/Projeto.class.php");
 $categoria=$valor=$duracaoprevista=$nome=$codigo= '';
 $categoriaErr=$valorErr=$duracaoprevistaErr=$nomeErr=$codigoErr = '';
-
+$form_valid = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $a=$b=$c=$d=$e = false;
   
-  if (empty($_POST["codigo"])) {
-    $codigoErr = '*campo Codigo precisa sem preenchido';
-  } else {
-    $codigo = test_input($_POST['codigo']);
-    if (!preg_match('/^[a-zA-Z0-9]*$/',$codigo)) {
-      $codigoErr = "Digite letras e números para esse campo";
-    }  
-  }
-	
-  if (empty($_POST['nome'])){
-  	$nomeErr = '*campo Nome precisa sem preenchido';
-  }else {
-	$nome = test_input($_POST['nome']);  
-	if(!preg_match('/^[a-zA-Z]*$/',$nome)){
-		$nomeErr = 'Digite letras para esse campo';	
-	}
-  }
+  $a=validar_campo('codigo',$codigo,$codigoErr,'/^[a-zA-Z0-9]*$/'); 
+  $b=validar_campo('nome',$nome,$nomeErr,'/^[a-zA-Z]*$/');
+  $c=validar_campo('duracaoprevista',$duracaoprevista,$duracaoprevistaErr,'/^[0-9]*$/');
+  $d=validar_campo('valor',$valor,$valorErr,'/^[0-9]*$/');   
+  if($_POST['categoria']!=='false')$e=true;	
   
-  if (empty($_POST['duracaoprevista'])){
-  	$duracaoprevistaErr = '*campo Duração Prevista precisa sem preenchido';
-  }else {
-	$duracaoprevista = test_input($_POST['duracaoprevista']);  
-	if(!preg_match('/^[0-9]*$/',$duracaoprevista)){
-		$duracaoprevistaErr = 'Digite números para esse campo';	
-	}
-  }
-  
-  if (empty($_POST['valor'])){
-  	$valorErr = '*campo Valor precisa sem preenchido';
-  }else {
-	$valor = test_input($_POST['valor']);  
-	if(!preg_match('/^[0-9]*$/',$valor)){
-		$valorErr = 'Digite números para esse campo';	
-	}
-  }
-    
+  $form_valid = $a and $b and $c and $d and $e;
 }  
   	function test_input($data) {
   		$data = trim($data);
@@ -49,8 +21,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   		$data = htmlspecialchars($data);
   		return $data;
 	}
+	function validar_campo($campo,&$var_campo,&$var_error,$exp_regular){
+		if (empty($_POST[$campo])){
+  		$var_error = '* '.$campo.' precisa sem preenchido';
+  		return false;
+  		}else {
+			$var_campo = test_input($_POST[$campo]);  
+			if(!preg_match($exp_regular,$var_campo)){
+				$var_error = 'Valores inválidos para o campo';
+				return false;	
+			}
+  		}
+  		return true;
+	}
 ?>
 
+<?php if($form_valid===false) {?>
 <div class="row">
 			<ol class="breadcrumb">
 				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
@@ -112,3 +98,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
         </script>	
+        <?php } else{ ?>
+        
+<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Cadastro de Usuário</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header"></h1>
+			</div>
+		</div><!--/.row-->
+				
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Cadastrar Projeto</div>
+					<div class="panel-body">
+						  <h3>Formulário válido!</h3>						  
+						  <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    
+                    </div>
+				</div>
+			</div>
+		</div><!--/.row-->
+<?php }?>
