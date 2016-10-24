@@ -1,7 +1,7 @@
 <?php
 
 $pagina = 'inicial.php';
-if($_SERVER["REQUEST_METHOD"] == "GET"){
+if(isset($_GET['p'])){
 	//baseado no atributo p ele define qual pagina inclui
 	switch($_GET['p']){
 		case 'usuario_cad':
@@ -34,9 +34,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$pagina = 'projeto_cad.php';
 			$titulo = 'Cadastrar Projeto';
 			break;
-		default:
-			$pagina = 'inicial.php';
-			$titulo = 'Bem vindo!';
 
 	}
 }
@@ -101,6 +98,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			<li <?php if ($_GET['p'] == 'usuario_cad') echo "class='active'"; ?> ><a href="index.php?p=usuario_cad"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Cadastrar Usuário</a></li>
 			<li <?php if ($_GET['p'] == 'usuario_consulta') echo "class='active'"; ?> ><a href="index.php?p=usuario_consulta"><svg class="glyph stroked eye"><use xlink:href="#stroked-eye"></use></svg> Consulta Usuário</a></li>
 			<li <?php if ($_GET['p'] == 'projeto_cad') echo "class='active'"; ?> ><a href="index.php?p=projeto_cad">Cadastrar Projeto</a> </li>
+			<li <?php if ($_GET['p'] == 'projeto_consulta') echo "class='active'"; ?> ><a href="index.php?p=projeto_consulta">Consultar Projeto</a> </li>
 			<li><a href="charts.html"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
 			<li><a href="tables.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tables</a></li>
 			<li><a href="forms.html"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Forms</a></li>
