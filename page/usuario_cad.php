@@ -2,9 +2,27 @@
 
 include("class/Conexao.class.php");
 
-if (isset($_POST['cadastrar'])) {
+if (isset($_POST['enviar'])) {
+    $array = array(
+        'login' => $_POST['login'],
+        'senha' => $_POST['senha'],
+        'nome' => $_POST['nome'],
+        'cpf' => $_POST['cpf'],
+        'pais' => $_POST['pais'],
+        'estado' => $_POST['estado'],
+        'cidade' => $_POST['cidade'],
+        'endereco' => $_POST['endereco'],
+        'datanascimento' => $_POST['datanascimento'],
+        'email' => $_POST['email'],
+        'tipo' => $_POST['tipo']
+    );
 
-
+    $conexao = new Conexao();
+    if($conexao->insert('usuario',$array)) {
+        $msg = "Cadastro realizado com sucesso!";
+    } else {
+        $msg = "Erro ao cadastrar";
+    }
 
 }
 
@@ -21,6 +39,12 @@ if (isset($_POST['cadastrar'])) {
 			<div class="col-lg-12">
 				<h1 class="page-header"></h1>
 			</div>
+
+            <?php if (count($msg) > 0) { ?>
+            <div class="alert alert-success  alert-dismissible animated fadeIn" role="alert">
+                <?php echo "<p>$msg</p>"; ?>
+            </div>
+            <?php } ?>
 		</div><!--/.row-->
 				
 		
@@ -44,7 +68,7 @@ if (isset($_POST['cadastrar'])) {
 
                         <div class="form-group">
                             <label>Repita a Senha</label>
-                            <input type="password" name="login" class="form-control">
+                            <input type="password" name="confirma" class="form-control">
                         </div>
 
                         <div class="form-group">
@@ -64,7 +88,7 @@ if (isset($_POST['cadastrar'])) {
 
                         <div class="form-group">
                             <label>Estado</label>
-                            <input type="text" name="Estado" class="form-control">
+                            <input type="text" name="estado" class="form-control">
                         </div>
 
                         <div class="form-group">
