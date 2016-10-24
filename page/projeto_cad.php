@@ -1,11 +1,9 @@
 <?php
 
-include("class/Projeto.class.php");
+require_once("class/Projeto.class.php");
 
 if (isset($_POST['cadastrar'])) {
-
-
-
+    echo "ok";
 }
 
 ?>

@@ -8,9 +8,10 @@ if($_GET['p']){
 			$pagina = 'usuario_cad.php';
 			$titulo = 'Cadastrar Usuário';
 			break;
-		case 'contato':
-			$pagina = 'contato.php';
+		case 'usuario_consulta':
+			$pagina = 'usuario_consulta.php';
 			$titulo = 'Contato';
+			break;
 		case 'projeto_cad':
 			$pagina = 'projeto_cad.php';
 			$titulo = 'Cadastrar Projeto';
@@ -81,7 +82,8 @@ if($_GET['p']){
 			<!-- Menu que chama as pages -->
 			<li <?php if ($_GET['p'] == 'inicio' || empty($_GET['p'])) echo "class='active'"; ?> ><a href="index.php"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
 			<li <?php if ($_GET['p'] == 'usuario_cad') echo "class='active'"; ?> ><a href="index.php?p=usuario_cad"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Cadastrar Usuário</a></li>
-			<li> <?php if ($_GET['p'] == 'projeto_cad') echo "class='active'"; ?> <a href="index.php?p=projeto_cad">cadastro projeto</a> </li>
+			<li <?php if ($_GET['p'] == 'usuario_consulta') echo "class='active'"; ?> ><a href="index.php?p=usuario_consulta"><svg class="glyph stroked eye"><use xlink:href="#stroked-eye"></use></svg> Consulta Usuário</a></li>
+			<li <?php if ($_GET['p'] == 'projeto_cad') echo "class='active'"; ?> ><a href="index.php?p=projeto_cad">cadastro projeto</a> </li>
 			<li><a href="charts.html"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
 			<li><a href="tables.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tables</a></li>
 			<li><a href="forms.html"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Forms</a></li>
@@ -135,6 +137,7 @@ if($_GET['p']){
 				$(this).find('em:first').toggleClass("glyphicon-minus");	  
 			}); 
 			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
+			
 		}(window.jQuery);
 
 		$(window).on('resize', function () {
@@ -142,6 +145,9 @@ if($_GET['p']){
 		})
 		$(window).on('resize', function () {
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		
+		
+		
 		})
 	</script>	
 </body>

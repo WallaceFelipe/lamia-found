@@ -1,17 +1,18 @@
 <?php 
 	include("class/conexao.class.php");
+	
 	class Projeto{
 	
-   private $id;
-   private $codigo;
-	private $nome;
-	private $categoria;
-	private $status; 
-	private $duracaoprevista;
-	public $valor;
-	public $prazomaximo; //Prazo maximo para execução
-	public $valorminimo; //Valor minimo permitido para financiamento
-	public $valormaximo; //Valor maximo permitido para financiamento
+		private $id;
+		private $codigo;
+		private $nome;
+		private $categoria;
+		private $status; 
+		private $duracaoprevista;
+		public $valor;
+		public $prazomaximo; //Prazo maximo para execução
+		public $valorminimo; //Valor minimo permitido para financiamento
+		public $valormaximo; //Valor maximo permitido para financiamento
 	
 		public function __construct(){}
 		
