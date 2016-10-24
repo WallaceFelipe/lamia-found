@@ -1,7 +1,7 @@
 <?php
 
 $pagina = 'inicial.php';
-if($_GET['p']){
+if($_SERVER["REQUEST_METHOD"] == "GET"){
 	//baseado no atributo p ele define qual pagina inclui
 	switch($_GET['p']){
 		case 'usuario_cad':
@@ -21,6 +21,19 @@ if($_GET['p']){
 
 	}
 
+}
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+	switch($_POST['p']) {
+		case 'projeto_cad':
+			$pagina = 'projeto_cad.php';
+			$titulo = 'Cadastrar Projeto';
+			break;
+		default:
+			$pagina = 'inicial.php';
+			$titulo = 'Bem vindo!';
+
+	}
 }
 ?>
 <!DOCTYPE html>
