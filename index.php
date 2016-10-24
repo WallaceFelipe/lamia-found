@@ -13,7 +13,7 @@ if($_GET['p']){
 			$titulo = 'Contato';
 		case 'projeto_cad':
 			$pagina = 'projeto_cad.php';
-			$titulo = 'cadastro de projetos';
+			$titulo = 'Cadastrar Projeto';
 			break;
 		default:
 			$pagina = 'inicial.php';
