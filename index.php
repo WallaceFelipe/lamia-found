@@ -9,6 +9,7 @@ if(isset($_GET['p'])){
 			$titulo = 'Cadastrar Usuário';
 			break;
 		case 'usuario_consulta':
+			;
 			$pagina = 'usuario_consulta.php';
 			$titulo = 'Contato';
 			break;
@@ -27,8 +28,9 @@ if(isset($_GET['p'])){
 	}
 
 }
+/* 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-
+	esta funcao estava sobrescrevendo a pagina corretamente definida acima.
 	switch($_POST['p']) {
 		case 'projeto_cad':
 			$pagina = 'projeto_cad.php';
@@ -36,7 +38,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			break;
 
 	}
+	
 }
+*/
+
 ?>
 <!DOCTYPE html>
 <html>

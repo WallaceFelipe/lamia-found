@@ -4,7 +4,7 @@ include("class/Conexao.class.php");
 if (!isset($_POST['acao'])) {
     
     $conexao = new Conexao();
-    $usuarios = $conexao->select('*')->from('usuario')->executeNGet();
+    $usuarios = $conexao->select('*')->from('usuario')->orderby('nome')->executeNGet();
 } else {
     if ($_POST['acao'] == 'alterar') {
             $array = array(
@@ -28,7 +28,26 @@ if (!isset($_POST['acao'])) {
         }
 
     } elseif ($_POST['acao'] == 'pesquisar') {
+        
 
+        $conexao = new Conexao();
+        $nome = $conexao->escape($_POST['nome']);
+        $login = $conexao->escape($_POST['login']);
+
+        if (empty($nome) && empty($login)) {
+            $usuarios = $conexao->select('*')->from('usuario')->executeNGet();
+        } else {
+
+            if(!empty($nome) && !empty($login))
+                $usuarios = $conexao->select('*')->from('usuario')->where("nome  like '%$nome%' or login like '%$login%'")->executeNGet();
+            
+            elseif(!empty($nome))
+                $usuarios = $conexao->select('*')->from('usuario')->where("nome  like '%$nome%'")->executeNGet();
+
+            elseif(!empty($login))
+                $usuarios = $conexao->select('*')->from('usuario')->where("login  like '%$login%'")->executeNGet();
+
+        }
     }
 }
 
@@ -61,14 +80,17 @@ if (!isset($_POST['acao'])) {
             </div>
             <div class="pane-body">
                 
-                <form action='' onsubmit='' method='post'>
-                    <div class="form-group">
-                        <input type="text" name="nome" value="" placeholder="Nome">
-                        <input type="text" name="login" value="" placeholder="Login">
+                <form action='index.php?p=usuario_consulta' method='post' class='form-inline'>
+                    <div class="form-group  col-lg-10 col-lg-offset-1">
+                        <input type="text" name="nome" value="" class='form-control' placeholder="Nome">
+                        <input type="text" name="login" value="" class='form-control' placeholder="Login">
 
-                        <button type="submit" name="acao" value="pesquisar">Pesquisar</button>
+                        <button type="submit" name="acao" value="pesquisar" class="btn btn-success" onclick="enviar();">Pesquisar</button>
                     </div>
                 </form>
+
+                <br>
+                <br>
 
                 <table class='table table-boredered <table-hover></table-hover>'>
                     <thead>

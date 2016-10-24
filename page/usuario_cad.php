@@ -54,7 +54,7 @@ if (isset($_POST['enviar'])) {
             <div class="panel-heading">Nome da tabela</div>
             <div class="panel-body">
 
-                <form class="form-group" action='' onsubmit="" method="post">
+                <form class="form-group" action='' onsubmit="enviar_formulario();" method="post">
 
                     <div class="form-group">
                         <label>Nome Completo</label>
@@ -143,7 +143,7 @@ if (isset($_POST['enviar'])) {
                             </select>
                         </div>
                     </div>
-                    <button type="submit" name="enviar" value="true" onclick="enviar_formulario()" class="btn btn-success">Cadastrar</button>
+                    <button type="submit" name="enviar" value="true" class="btn btn-success">Cadastrar</button>
                 </form>
 
             </div>
