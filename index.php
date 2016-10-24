@@ -1,7 +1,8 @@
 <?php
 
 $pagina = 'inicial.php';
-if($_SERVER["REQUEST_METHOD"] == "GET"){
+
+if($_GET['p']){
 	//baseado no atributo p ele define qual pagina inclui
 	switch($_GET['p']){
 		case 'usuario_cad':
@@ -9,6 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 			$titulo = 'Cadastrar Usuário';
 			break;
 		case 'usuario_consulta':
+			;
 			$pagina = 'usuario_consulta.php';
 			$titulo = 'Contato';
 			break;
@@ -23,8 +25,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 	}
 
 }
+/* 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-
+	esta funcao estava sobrescrevendo a pagina corretamente definida acima.
 	switch($_POST['p']) {
 		case 'projeto_cad':
 			$pagina = 'projeto_cad.php';
@@ -35,7 +38,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$titulo = 'Bem vindo!';
 
 	}
+	
 }
+*/
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -97,33 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			<li <?php if ($_GET['p'] == 'usuario_cad') echo "class='active'"; ?> ><a href="index.php?p=usuario_cad"><svg class="glyph stroked calendar"><use xlink:href="#stroked-calendar"></use></svg> Cadastrar Usuário</a></li>
 			<li <?php if ($_GET['p'] == 'usuario_consulta') echo "class='active'"; ?> ><a href="index.php?p=usuario_consulta"><svg class="glyph stroked eye"><use xlink:href="#stroked-eye"></use></svg> Consulta Usuário</a></li>
 			<li <?php if ($_GET['p'] == 'projeto_cad') echo "class='active'"; ?> ><a href="index.php?p=projeto_cad">Cadastrar Projeto</a> </li>
-			<li><a href="charts.html"><svg class="glyph stroked line-graph"><use xlink:href="#stroked-line-graph"></use></svg> Charts</a></li>
-			<li><a href="tables.html"><svg class="glyph stroked table"><use xlink:href="#stroked-table"></use></svg> Tables</a></li>
-			<li><a href="forms.html"><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"></use></svg> Forms</a></li>
-			<li><a href="panels.html"><svg class="glyph stroked app-window"><use xlink:href="#stroked-app-window"></use></svg> Alerts &amp; Panels</a></li>
-			<li><a href="icons.html"><svg class="glyph stroked star"><use xlink:href="#stroked-star"></use></svg> Icons</a></li>
-			<li class="parent ">
-				<a href="#">
-					<span data-toggle="collapse" href="#sub-item-1"><svg class="glyph stroked chevron-down"><use xlink:href="#stroked-chevron-down"></use></svg>Dropdown</span> 
-				</a>
-				<ul class="children collapse" id="sub-item-1">
-					<li>
-						<a class="" href="#">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 1
-						</a>
-					</li>
-					<li>
-						<a class="" href="#">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 2
-						</a>
-					</li>
-					<li>
-						<a class="" href="#">
-							<svg class="glyph stroked chevron-right"><use xlink:href="#stroked-chevron-right"></use></svg> Sub Item 3
-						</a>
-					</li>
-				</ul>
-			</li>
+			
 			<li role="presentation" class="divider"></li>
 			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
 		</ul>
