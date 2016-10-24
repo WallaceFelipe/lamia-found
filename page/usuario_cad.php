@@ -4,7 +4,7 @@ include("class/Conexao.class.php");
 
 if (isset($_POST['cadastrar'])) {
 
-    
+
 
 }
 
@@ -79,7 +79,7 @@ if (isset($_POST['cadastrar'])) {
 
                         <div class="form-group">
                             <label>Data de Nascimento</label>
-                            <input type="text" name="datanascimento" class="form-control">
+                            <input type="text" name="datanascimento" class="datepicker form-control">
                         </div>
 
                         <div class="form-group">
@@ -107,9 +107,20 @@ if (isset($_POST['cadastrar'])) {
                                 <option value="pequenasobras">Pequenas Obras</option>
                             </select>
                         </div>
+
+                        <button type="submit" name="enviar" value="true" onclick="enviar_formulario()" class="btn btn-success">Cadastrar</button>
                     </form>
 
                     </div>
 				</div>
 			</div>
-		</div><!--/.row-->	
+		</div><!--/.row-->
+
+        <script>
+            function enviar_formulario() {
+                //Validações pré envio
+
+                return true;
+
+            }
+        </script>	
