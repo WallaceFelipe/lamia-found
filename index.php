@@ -18,6 +18,10 @@ if($_GET['p']){
 			$pagina = 'projeto_cad.php';
 			$titulo = 'Cadastrar Projeto';
 			break;
+		case 'projeto_consulta':
+			$pagina = 'projeto_consulta.php';
+			$titulo = 'Consultar Projetos';
+			break;
 		default:
 			$pagina = 'inicial.php';
 			$titulo = 'Bem vindo!';

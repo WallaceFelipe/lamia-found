@@ -2,8 +2,8 @@
 	require_once("class/Conexao.class.php");
 	class Projeto{
 	
-   private $id;
-   private $codigo;
+    private $id;
+    private $codigo;
 	private $nome;
 	private $categoria;
 	private $status; 
@@ -44,10 +44,10 @@
 																  'valor'=>$valor)); 
 		}
 	   
-	   public function sql_read($codigo=NULL,$nome=NULL,$categoria){
+	   public function sql_read($codigo='',$nome='',$categoria=''){
 				$conexao  = new Conexao();
 				$json;
-				if($codigo!=NULL){				
+				if($codigo!=''){				
 					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
 										  ->from('projeto')
 										  ->where('codigo = '.$codigo)
@@ -62,7 +62,7 @@
 					
 				}
 				
-				if($nome!=NULL){				
+				if($nome!=''){				
 					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
 										  ->from('projeto')
 										  ->where('nome = '.$nome)
@@ -76,7 +76,7 @@
 												'} ]}';
 					
 				}
-				else{
+				elsif($categoria!=''){
 					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
 											  ->from('projeto')
 											  ->where('categoria = '.$categoria)
@@ -89,6 +89,22 @@
 								   ' "duracaoprevista" :"'.projeto['duracaoprevista'].'"'.
 								  '}'; 	 				
 					}
+
+					$json += ']}';
+				}
+				else{
+					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+											  ->from('projeto')
+											  ->executeNGet(); 
+					$json ='{"projetos" : [';
+					foreach($projetos as $projeto){
+						$json +='{ "nome" : "'.projeto['nome'].'"'.
+								   ' "categoria" : "'.projeto['categoria'].'"'.
+								   ' "valor" : "'.projeto['valor'].'"'.
+								   ' "duracaoprevista" :"'.projeto['duracaoprevista'].'"'.
+								  '}'; 	 				
+					}
+				
 					$json += ']}';
 				}
 				return $json;	

@@ -1,6 +1,5 @@
 <?php
 
-require_once("class/Projeto.class.php");
 
 $categoria=$valor=$duracaoprevista=$nome=$codigo= '';
 $categoriaErr=$valorErr=$duracaoprevistaErr=$nomeErr=$codigoErr = '';
@@ -9,12 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $a=$b=$c=$d=$e = false;
   
   $a=validar_campo('codigo',$codigo,$codigoErr,'/^[a-zA-Z0-9]*$/'); 
-  $b=validar_campo('nome',$nome,$nomeErr,'/^[a-zA-Z]*$/');
+  $b=validar_campo('nome',$nome,$nomeErr,'/^[a-z A-Z]*$/');
   $c=validar_campo('duracaoprevista',$duracaoprevista,$duracaoprevistaErr,'/^[0-9]*$/');
   $d=validar_campo('valor',$valor,$valorErr,'/^[0-9]*$/');   
+  $categoria = $_POST['categoria'];
   if($_POST['categoria']!=='false')$e=true;	
-  
-  $form_valid = $a and $b and $c and $d and $e;
+
+  $form_valid = ($e and $b and $c and $d and $a);
+
 }  
   	function test_input($data) {
   		$data = trim($data);
@@ -59,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					<div class="panel-heading">Cadastrar Projeto</div>
 					<div class="panel-body">
 
-                    <form class="form-group" action="index.php" onsubmit="" method="post">
+                    <form class="form-group" action="" onsubmit="" method="post">
 									 <input type="hidden" value="projeto_cad" name="p">
                         	
                             <label>Código <?php echo $codigoErr; ?></label>
@@ -83,7 +84,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value="manutencaoreforma">Manutenção e Reforma</option>
                                 <option value="pequenasobras">Pequenas Obras</option>
                             </select>
-                        
                         <button type="submit" name="enviar" value="true" class="btn btn-success">Cadastrar</button>
                     </form>
 
@@ -121,13 +121,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<div class="panel panel-default">
 					<div class="panel-heading">Cadastrar Projeto</div>
 					<div class="panel-body">
-						  <h3>Formulário válido!</h3>						  
-						  <p></p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    
+						  <h3>Confirmar cadastro?</h3>
+						  <p>Nome: <?php echo $nome; ?> </p>
+                    <p>Codigo: <?php echo $codigo; ?> </p>
+                    <p>Categoria: <?php echo $categoria; ?> </p>
+                    <p>Valor: <?php echo $valor; ?> </p> 
+                    <p>Duração Prevista <?php echo $duracaoprevista;?>dias</p>						  					  
+						  <form class="form-group" action="class/Projetos.class.php" onsubmit="" method="post">
+							  <input type="hidden" name="operation" value="create">						 	  
+						 	  <input type="hidden" name="nome" value="<?php echo $nome; ?>">
+							  <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
+ 							  <input type="hidden" name="categoria" value="<?php echo $categoria; ?>">
+							  <input type="hidden" name="valor" value="<?php echo $valor; ?>">
+							  <input type="hidden" name="duracaoprevista" value="<?php echo $duracaoprevista; ?>">
+							  <input type="submit" value="confirma">                    
+                    </form>
                     </div>
 				</div>
 			</div>
