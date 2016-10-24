@@ -43,7 +43,8 @@
 																  'duracaoprevista'=>$duracaoprevista,
 																  'valor'=>$valor)); 
 		}
-		public function read($codigo=NULL,$nome=NULL,$categoria){
+	   
+	   public function read($codigo=NULL,$nome=NULL,$categoria){
 				$conexao  = new Conexao();
 				if($codigo!=NULL){				
 					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
@@ -89,5 +90,19 @@
 				$json += ']}'	
 		}
 		
-	}
+		public function update($codigo,$nome=NULL, $categoria=NULL,$duracaoprevista=NULL,$valor=NULL){
+			$update_values = array();
+			
+			if($nome!=NULL) array_push($update_values,'nome',$nome);
+			if($categoria != NULL) array_push($update_values,'categoria',$categoria);
+			if($duracaoprevista != NULL) array_push($update_values,'duracaoprevista',$duracaoprevista);
+			if($valor != NULL) array_push($update_values,'valor',$valor);		
+			
+			$conexao = new Conexao();
+			$conexao->update('projeto', $update_values,$codigo);	
+		}
+		
+		public function delete($codigo==NULL) {
+			if($codigo!=NULL) $conexao->execute('DELETE FROM projeto WHERE codigo = '.$codigo);
+		}
 	

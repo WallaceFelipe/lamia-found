@@ -43,7 +43,8 @@
 																  'duracaoprevista'=>$duracaoprevista,
 																  'valor'=>$valor)); 
 		}
-		public function read($codigo,$nome,$categoria){
+	   
+	   public function read($codigo=NULL,$nome=NULL,$categoria){
 				$conexao  = new Conexao();
 				if($codigo!=NULL){				
 					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
@@ -74,10 +75,31 @@
 												'} ]}';
 					return $json;
 				}
+				$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+										  ->from('projeto')
+										  ->where('categoria = '.$categoria)
+										  ->executeNGet(); 
 				$json ='{"projetos" : [';
 				foreach($projetos as $projeto){
-					$json += projeto				
-				}	
+					$json +='{ "nome" : "'.projeto['nome'].'"'.
+							   ' "categoria" : "'.projeto['categoria'].'"'.
+							   ' "valor" : "'.projeto['valor'].'"'.
+							   ' "duracaoprevista" :"'.projeto['duracaoprevista'].'"'.
+							  '}'; 	 				
+				}
+				$json += ']}'	
+		}
+		
+		public function update($codigo,$nome=NULL, $categoria=NULL,$duracaoprevista=NULL,$valor=NULL){
+			$update_values = array();
+			
+			if($nome!=NULL) array_push($update_values,'nome',$nome);
+			if($categoria != NULL) array_push($update_values,'categoria',$categoria);
+			if($duracaoprevista != NULL) array_push($update_values,'duracaoprevista',$duracaoprevista);
+			if($valor != NULL) array_push($update_values,'valor',$valor);		
+			
+			$conexao = new Conexao();
+			$conexao->update('projeto', $update_values,$codigo);	
 		}
 		
 	}
