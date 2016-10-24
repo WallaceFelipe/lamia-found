@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   		}
   		return true;
 	}
+
 ?>
 
 <?php if($form_valid===false) {?>
