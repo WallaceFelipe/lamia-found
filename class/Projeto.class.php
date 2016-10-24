@@ -1,5 +1,5 @@
 <?php 
-	require_once("class/Conexao.class.php");
+	include("Conexao.class.php");
 	class Projeto{
 	
    private $id;
@@ -20,31 +20,31 @@
 		}
 		
 		public function __get($name){
-			 echo "Getting '$name'\n";
-        if (array_key_exists($name, $this->data)) {
-            return $this->data[$name];
-        }
+				 echo "Getting '$name'\n";
+	        if (array_key_exists($name, $this->data)) {
+	            return $this->data[$name];
+	        }
 
-        $trace = debug_backtrace();
-        trigger_error(
-            'Undefined property via __get(): ' . $name .
-            ' in ' . $trace[0]['file'] .
-            ' on line ' . $trace[0]['line'],
-            E_USER_NOTICE);
-        return null;		
+	        $trace = debug_backtrace();
+	        trigger_error(
+	            'Undefined property via __get(): ' . $name .
+	            ' in ' . $trace[0]['file'] .
+	            ' on line ' . $trace[0]['line'],
+	            E_USER_NOTICE);
+	        return null;		
 		}
 		
 		public function sql_create($codigo,$nome,$categoria,$duracaoprevista,$valor){
 			$conexao = new Conexao();		
 			return $conexao->insert('projeto', array('nome'=>$nome,
-																  'codigo'=>$codigo,
-																  'categoria'=>$categoria,
-																  'status'=>'candidato',
-																  'duracaoprevista'=>$duracaoprevista,
-																  'valor'=>$valor)); 
+													   'codigo'=>$codigo,
+													   'categoria'=>$categoria,
+													   'status'=>'candidato',
+													   'duracaoprevista'=>$duracaoprevist,
+													   'valor'=>$valor)); 
 		}
 	   
-	   public function sql_read($codigo=NULL,$nome=NULL,$categoria){
+	   public function sql_read($codigo=NULL,$nome=NULL,$categoria=NULL){
 				$conexao  = new Conexao();
 				$json;
 				if($codigo!=NULL){				
@@ -76,10 +76,24 @@
 												'} ]}';
 					
 				}
-				else{
+				elsif($categoria!=NULL){
 					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
 											  ->from('projeto')
 											  ->where('categoria = '.$categoria)
+											  ->executeNGet(); 
+					$json ='{"projetos" : [';
+					foreach($projetos as $projeto){
+						$json +='{ "nome" : "'.projeto['nome'].'"'.
+								   ' "categoria" : "'.projeto['categoria'].'"'.
+								   ' "valor" : "'.projeto['valor'].'"'.
+								   ' "duracaoprevista" :"'.projeto['duracaoprevista'].'"'.
+								  '}'; 	 				
+					}
+					$json += ']}';
+				}
+				else{
+					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+											  ->from('projeto')
 											  ->executeNGet(); 
 					$json ='{"projetos" : [';
 					foreach($projetos as $projeto){
