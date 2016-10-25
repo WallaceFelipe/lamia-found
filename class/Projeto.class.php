@@ -1,5 +1,5 @@
 <?php 
-	require_once("class/Conexao.class.php");
+	require_once("Conexao.class.php");
 	class Projeto{
 	
     private $id;
@@ -48,14 +48,14 @@
 				$conexao  = new Conexao();
 				$projetos;
 				if($codigo!=''){				
-					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+					$projetos = $conexao->select('*')
 										  ->from('projeto')
 										  ->where('codigo = '.$codigo)
 										  ->limit(1)
 										  ->executeNGet(); 					
 				}
 				else if($nome!=''){				
-					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+					$projetos = $conexao->select('*')
 										  ->from('projeto')
 										  ->where('nome = '.$nome)
 										  ->limit(1)
@@ -63,13 +63,13 @@
 					
 				}
 				else if($categoria!=''){
-					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+					$projetos = $conexao->select('*')
 											  ->from('projeto')
-											  ->where('categoria = '.$categoria)
+											  ->where("categoria = '".$categoria."'")
 											  ->executeNGet(); 
 				}
 				else{
-					$projetos = $conexao->select('nome,categoria,valor,duracaoprevista')
+					$projetos = $conexao->select('*')
 											  ->from('projeto')
 											  ->executeNGet();
 					}
@@ -82,10 +82,10 @@
 					 $categoria='',$duracaoprevista='',$valor=''){
 			$update_values = array();
 			
-			if($nome!='') array_push($update_values,'nome',$nome);
-			if($categoria != '') array_push($update_values,'categoria',$categoria);
-			if($duracaoprevista != '') array_push($update_values,'duracaoprevista',$duracaoprevista);
-			if($valor != '') array_push($update_values,'valor',$valor);		
+			if($nome!='') $update_values['nome'] = $nome;
+			if($categoria != '') $update_values['categoria'] = $categoria;
+			if($duracaoprevista != '') $update_values['duracaoprevista'] = $duracaoprevista;
+			if($valor != '') $update_values['valor'] = $valor;		
 			
 			$conexao = new Conexao();
 			$conexao->update('projeto', $update_values,$codigo);	
