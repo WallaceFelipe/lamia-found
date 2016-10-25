@@ -77,11 +77,11 @@
 		
 		
 		public function sql_update($codigo,$nome='',
-					 $categoria='',$duracaoprevista='',$valor=''){
+					 $cat='',$duracaoprevista='',$valor=''){
 			$update_values = array();
 			
 			if($nome!='') $update_values['nome'] = $nome;
-			if($categoria != '') $update_values['categoria'] = $categoria;
+			if($cat != '') $update_values['categoria'] = $cat;
 			if($duracaoprevista != '') $update_values['duracaoprevista'] = $duracaoprevista;
 			if($valor != '') $update_values['valor'] = $valor;		
 			
