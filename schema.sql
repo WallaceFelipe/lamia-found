@@ -2,7 +2,7 @@ CREATE TABLE usuario(
 id INT PRIMARY KEY AUTO_INCREMENT,
 login VARCHAR(30) UNIQUE, 
 senha VARCHAR(30) NOT NULL,
-nome VARCHAR(30) NOT NULL,
+nome VARCHAR(50) NOT NULL,
 cpf CHAR(11) NOT NULL,
 datanascimento DATE NOT NULL,
 email VARCHAR(50) UNIQUE,
@@ -10,9 +10,7 @@ tipo SET('gestordeprojeto','avaliadordeprojeto','financiadoracademico') NOT NULL
 pais VARCHAR(35) NOT NULL,
 estado VARCHAR(35) NOT NULL,
 cidade VARCHAR(35) NOT NULL,
-bairro VARCHAR(35) NOT NULL,
-rua VARCHAR(35) NOT NULL,
-numero INT NOT NULL,
+endereco VARCHAR(255) NOT NULL,
 ativo BOOL DEFAULT '1');
 
 CREATE TABLE avaliadordeprojetos(
