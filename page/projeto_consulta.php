@@ -171,14 +171,15 @@
                         <label>Valor máximo</label>
                         <input type="text" name="cidade" class="form-control" readonly>
                         </div>
-                    </div>       
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="acao" value="alterar" class="btn btn-success" onclick="enviar();">Salvar</button>
+                </div>       
                     </div>
                     
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="acao" value="alterar" class="btn btn-success" onclick="enviar();">Salvar</button>
-                </div>
+                
             </form>
         </div>
     </div>
@@ -209,7 +210,10 @@
 
                       
                     </div>
-
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="acao" value="deletar" class="btn btn-danger" onclick="enviar();">Deletar</button>
+                </div>
                 
                     </div>
 
@@ -217,10 +221,7 @@
                     </div>
                     
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="acao" value="deletar" class="btn btn-danger" onclick="enviar();">Deletar</button>
-                </div>
+                
             </form>
         </div>
     </div>
