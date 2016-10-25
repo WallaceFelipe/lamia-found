@@ -28,7 +28,7 @@ if (isset($_POST['enviar'])) {
 
     $conexao = new Conexao();
 
-    if(!empty($_POST['categoria'])) {
+    if (!empty($_POST['categoria'])) {
 
         if($conexao->insert('usuario',$array)) {
             
@@ -168,7 +168,7 @@ if (isset($_POST['enviar'])) {
                         <div class="col-sm-6 hidden" id='categoria'>
                             <label>Catedoria</label>
                             <select name="categoria" class="form-control">
-                                <option value="false" default>...</option>
+                                <option value="" default>...</option>
                                 <option value="pesquisa">Pesquisa</option>
                                 <option value="competicaotecnologica">Competição Tecnológica</option>
                                 <option value="inovacaoensino">Inovação no Ensino</option>

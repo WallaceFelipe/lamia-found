@@ -60,6 +60,8 @@ if (!isset($_POST['acao'])) {
                 $msg = "Erro ao desativar";
             }
         }
+
+        $usuarios = $conexao->select('*')->from('usuario')->where('ativo = 1')->orderby('nome')->executeNGet();
     }
 }
 

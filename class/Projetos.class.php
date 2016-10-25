@@ -11,7 +11,7 @@
 				$valor = $_POST['valor'];
 				$duracaoprevista = $_POST['duracaoprevista'];
 				$myProjeto->sql_create($codigo,$nome,$categoria,$duracaoprevista,$valor);
-				header("location:adler/index.php");
+				echo "<script> location.href = '../index.php'; </script>";
 				break;
 			default:
 		}		
