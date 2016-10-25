@@ -3,26 +3,60 @@
 include("class/Conexao.class.php");
 
 if (isset($_POST['enviar'])) {
+    
+    $dataExp = explode("/",$_POST['datanascimento']);
+    $data = $dataExp[2].$dataExp[1].$dataExp[0];
+
+    $cpf = explode(".", $_POST['cpf']);
+    $cpf = implode("",$cpf);
+    $cpf = explode("-",$cpf);
+    $cpf = implode("",$cpf);
+
     $array = array(
         'login' => $_POST['login'],
         'senha' => $_POST['senha'],
         'nome' => $_POST['nome'],
-        'cpf' => $_POST['cpf'],
+        'cpf' => $cpf,
         'pais' => $_POST['pais'],
         'estado' => $_POST['estado'],
         'cidade' => $_POST['cidade'],
         'endereco' => $_POST['endereco'],
-        'datanascimento' => $_POST['datanascimento'],
+        'datanascimento' => $data,
         'email' => $_POST['email'],
         'tipo' => $_POST['tipo']
     );
 
     $conexao = new Conexao();
-    if($conexao->insert('usuario',$array)) {
-        $msg = "Cadastro realizado com sucesso!";
+
+    if(!empty($_POST['categoria'])) {
+
+        if($conexao->insert('usuario',$array)) {
+            
+            $array = array(
+                'categoria' => $_POST['categoria'],
+                'idusuario' => $conexao->getCodigo()
+                );
+
+            if ($conexao->insert('avaliadordeprojetos', $array)) {
+                $msg = "Cadastro realizado com sucesso.";
+            } else {
+                $msg = "Erro ao cadastrar";
+            }
+
+        } else {
+            $msg = "Erro ao cadastrar";
+        }
     } else {
-        $msg = "Erro ao cadastrar";
+
+        if($conexao->insert('usuario',$array)) {
+            $msg = "Cadastro realizado com sucesso.";
+        } else {
+            $msg = "Erro ao cadastrar";
+        }
     }
+
+    
+    
 
 }
 
@@ -51,7 +85,7 @@ if (isset($_POST['enviar'])) {
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <div class="panel-heading">Nome da tabela</div>
+            <div class="panel-heading">Cadastro</div>
             <div class="panel-body">
 
                 <form class="form-group" action='' onsubmit="enviar_formulario();" method="post">
@@ -64,12 +98,12 @@ if (isset($_POST['enviar'])) {
                     <div class="form-group row">
                         <div class="col-sm-8">
                             <label>CPF</label>
-                            <input type="text" name="cpf" class="form-control">
+                            <input type="text" name="cpf" class="cpf form-control">
                         </div>
 
                         <div class="col-sm-4">
                             <label>Data de Nascimento</label>
-                            <input type="text" name="datanascimento" class="datepicker form-control" required>
+                            <input type="text" name="datanascimento" class="data datepicker form-control" required>
                         </div>
                     </div>
 
@@ -92,8 +126,8 @@ if (isset($_POST['enviar'])) {
                         </div>
 
                         <div class="col-sm-6">
-                            <label><i id="valida" class="glyphicon"></i> Repita a Senha</label>
-                            <input type="password" name="repetir" id="repeat_senha" oninput="valida_senha();" class="form-control">
+                            <label>Repita a Senha</label>
+                            <input type="password" name="repetir" id="repeat_senha" oninput="valida_senha();" class="form-control"><span id="valida" class="glyphicon" aria-label="true"></span>
                         </div>
                     </div>
 

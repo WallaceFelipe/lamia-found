@@ -1,5 +1,5 @@
 <?php 
-	require_once("class/Conexao.class.php");
+	require_once("Conexao.class.php");
 	class Projeto{
 	
     private $id;

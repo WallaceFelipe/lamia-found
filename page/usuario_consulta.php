@@ -1,10 +1,11 @@
 <?php
 include("class/Conexao.class.php");
 
+$conexao = new Conexao();
+
 if (!isset($_POST['acao'])) {
     
-    $conexao = new Conexao();
-    $usuarios = $conexao->select('*')->from('usuario')->orderby('nome')->executeNGet();
+    $usuarios = $conexao->select('*')->from('usuario')->where('ativo = 1')->orderby('nome')->executeNGet();
 } else {
     if ($_POST['acao'] == 'alterar') {
             $array = array(
@@ -20,7 +21,6 @@ if (!isset($_POST['acao'])) {
             'tipo' => $_POST['tipo']
         );
 
-        $conexao = new Conexao();
         if($conexao->update('usuario',$array, $_POST['id'], 'id')) {
             $msg = "Cadastro realizado com sucesso!";
         } else {
@@ -29,27 +29,40 @@ if (!isset($_POST['acao'])) {
 
     } elseif ($_POST['acao'] == 'pesquisar') {
         
-
-        $conexao = new Conexao();
         $nome = $conexao->escape($_POST['nome']);
         $login = $conexao->escape($_POST['login']);
 
         if (empty($nome) && empty($login)) {
-            $usuarios = $conexao->select('*')->from('usuario')->executeNGet();
+            $usuarios = $conexao->select('*')->from('usuario')->where('ativo = 1')->orderby('nome')->executeNGet();
         } else {
 
             if(!empty($nome) && !empty($login))
-                $usuarios = $conexao->select('*')->from('usuario')->where("nome  like '%$nome%' or login like '%$login%'")->executeNGet();
+                $usuarios = $conexao->select('*')->from('usuario')->where("ativo = 1 and nome  like '%$nome%' or login like '%$login%'")->orderby('nome')->executeNGet();
             
             elseif(!empty($nome))
-                $usuarios = $conexao->select('*')->from('usuario')->where("nome  like '%$nome%'")->executeNGet();
+                $usuarios = $conexao->select('*')->from('usuario')->where("ativo = 1 and nome  like '%$nome%'")->orderby('nome')->executeNGet();
 
             elseif(!empty($login))
-                $usuarios = $conexao->select('*')->from('usuario')->where("login  like '%$login%'")->executeNGet();
+                $usuarios = $conexao->select('*')->from('usuario')->where("ativo = 1 and login  like '%$login%'")->orderby('nome')->executeNGet();
 
+        }
+    } elseif ($_POST['acao'] == 'excluir') {
+        $query = "SELECT * FROM financiar JOIN projeto ON financiar.idprojeto = projeto.id WHERE financiar.idusuario = ".$_POST['id_user']." AND projeto.status = 'aprovado'";
+        $retorno = $conexao->execute($query);
+        if(empty($retorno)) {
+            $msg = "Usuário está financiando um projeto aprovado e que não está finalizado. Desativação impedida até que essa pendência seja resolvida";
+        } else {
+            $array = array('ativo' => 0);
+
+            if($conexao->update('usuario',$array, $_POST['id_user'], 'id')) {
+                $msg = "Desativação realizado com sucesso!";
+            } else {
+                $msg = "Erro ao desativar";
+            }
         }
     }
 }
+
 
 ?>
 
@@ -63,13 +76,13 @@ if (!isset($_POST['acao'])) {
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Usuários</h1>
+    
+        <?php if (count($msg) > 0) { ?>
+        <div class="alert alert-success  alert-dismissible animated fadeIn" role="alert">
+            <?php echo "<h3>$msg</h3>"; ?>
+        </div>
+        <?php } ?>
     </div>
-
-    <?php if (count($msg) > 0) { ?>
-    <div class="alert alert-success  alert-dismissible animated fadeIn" role="alert">
-        <?php echo "<p>$msg</p>"; ?>
-    </div>
-    <?php } ?>
 </div><!--/.row-->
 
 <div class="row">
@@ -106,7 +119,7 @@ if (!isset($_POST['acao'])) {
                             <td><a href="#" onclick='editar(<?php echo json_encode($value);?>);'><?php echo $value['nome'] ?></a></td>
                             <td><?php echo $value['login'] ?></td>
                             <td class="text-right">
-                                <button onclick="" id="remover_<?php echo $value['id']; ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></button>
+                                <button onclick="remover(<?php echo $value['id']; ?>);" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -138,12 +151,12 @@ if (!isset($_POST['acao'])) {
                     <div class="form-group row">
                         <div class="col-sm-8">
                             <label>CPF</label>
-                            <input type="text" name="cpf" class="form-control" readonly>
+                            <input type="text" name="cpf" class="cpf form-control" readonly>
                         </div>
 
                         <div class="col-sm-4">
                             <label>Data de Nascimento</label>
-                            <input type="text" name="datanascimento" class="datepicker form-control">
+                            <input type="text" name="datanascimento" class="data datepicker form-control">
                         </div>
                     </div>
 
@@ -204,6 +217,27 @@ if (!isset($_POST['acao'])) {
 </div>
 
 
+<!--Modal Confirmação-->
+<div class='modal fade' id="modalConfirma" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Confirmação</h4>
+            </div>
+            <form onsubmit="enviar();" method='post'>
+                <div class="modal-body">
+                    <p>Deseja realmente deletar o usuário?</p>
+                    <input type="text" name="id_user" id="id_user" class="hidden">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="acao" value="excluir" class="btn btn-success">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
 
     function editar(vetor) {
@@ -219,5 +253,10 @@ if (!isset($_POST['acao'])) {
 
     function enviar() {
         return true;
+    }
+
+    function remover(id) {
+        $("#id_user").val(id);
+        $("#modalConfirma").modal("show");
     }
 </script>
