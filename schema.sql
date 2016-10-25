@@ -15,7 +15,7 @@ ativo BOOL DEFAULT '1');
 
 CREATE TABLE avaliadordeprojetos(
 idusuario INT AUTO_INCREMENT,
-categoria SET('pesquisa','competicaotecnologica','inovacaoensino','manutencaoreforma','pequenasobras') NOT NULL,
+categoria ENUM('pesquisa','competicaotecnologica','inovacaoensino','manutencaoreforma','pequenasobras') UNIQUE,
 FOREIGN KEY(idusuario) REFERENCES usuario(id),
 PRIMARY KEY(idusuario)); 
 
