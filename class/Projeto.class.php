@@ -92,7 +92,8 @@
 		}
 		
 		public function sql_delete($codigo='') {
-			if($codigo!='') $conexao->execute('DELETE FROM projeto WHERE codigo = '.$codigo);
+			$conexao = new Conexao();
+			if($codigo!='')$conexao->execute("DELETE FROM projeto WHERE codigo = '".$codigo."'");
 		}
 		
 	}

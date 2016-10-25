@@ -23,8 +23,9 @@
 									   $_POST['duracaoprevista'],
 									   $_POST['valor']);
 				break;
+			case 'deletar':
 			default:
-				
+					$myProjeto->sql_delete($_POST['codigo']);
 				break;
 		}
 		
@@ -95,7 +96,7 @@
                             <td><a href="#" onclick='editar(<?php echo json_encode($result);?>);'><?php echo $result['nome'] ?></a></td>
                             <td><?php echo $result['categoria'] ?></td>
                             <td class="text-right">
-                                <button onclick="" id="remover_<?php echo $result['codigo']; ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></button>
+                                <button onclick='deletar(<?php echo json_encode($result);?>)'  id="remover_<?php echo $result['codigo']; ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -131,7 +132,15 @@
 
                         <div class="col-sm-4">
                             <label>Categoria</label>
-                            <input type="text" name="categoria" class="datepicker form-control">
+                            <select id="modalCategoria"  class="datepicker form-control">
+		                                <option id="OPpesquisa" value="pesquisa">Pesquisa</option>
+		                                <option id="OPcompeticaotecnologica" value="competicaotecnologica">Competição Tecnológica</option>
+		                                <option id="OPinovacaoensino"  value="inovacaoensino">Inovação no Ensino</option>
+		                                <option id="OPmanutencaoreforma" value="manutencaoreforma">Manutenção e Reforma</option>
+		                                <option id="OPpequenasobras" value="pequenasobras">Pequenas Obras</option>
+		                            	</select>
+
+                            
                         </div>
                     </div>
 
@@ -174,7 +183,48 @@
         </div>
     </div>
 </div>
+<!--MODAL DELETE-->
+<div class='modal fade' id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Usuário</h4>
+            </div>
+             <form class="form-group" id="deleta_modal" action='' onsubmit="" method="post">
+                <div class="modal-body">
+                
+                    <input type="text" name="id" class="hidden">
 
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" name="nome" class="form-control" >
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-8">
+                            <label>Codigo</label>
+                            <input type="text" name="codigo" class="form-control" readonly>
+                        </div>
+
+                      
+                    </div>
+
+                
+                    </div>
+
+     
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="acao" value="deletar" class="btn btn-danger" onclick="enviar();">Deletar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
 
@@ -185,11 +235,19 @@
         for (index = 0; index < inputs.length; ++index) {
             inputs[index].value = vetor[inputs[index].name];
         }
+        $("#modalCategoria").find("option#OP"+vetor.categoria).attr("selected",true);
 
-        $("#myModal").modal("show")
+        $("#myModal").modal("show");
     }
 
-    function enviar() {
-        return true;
+    function deletar(vetor) {
+    	var index;
+        var container = document.getElementById('deleta_modal');
+        var inputs = container.getElementsByTagName('input');
+        for (index = 0; index < inputs.length; ++index) {
+            inputs[index].value = vetor[inputs[index].name];
+        }
+        $("#delModal").modal("show");
     }
+    function enviar(){};
 </script>
