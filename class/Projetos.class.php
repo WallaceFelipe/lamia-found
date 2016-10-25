@@ -11,7 +11,8 @@
 				$valor = $_POST['valor'];
 				$duracaoprevista = $_POST['duracaoprevista'];
 				$myProjeto->sql_create($codigo,$nome,$categoria,$duracaoprevista,$valor);
-				header("location:/index.php");
+
+				echo "<script> location.href = '../index.php?p=projeto_cad'; </script>";
 				break;
 			default:
 		}		
