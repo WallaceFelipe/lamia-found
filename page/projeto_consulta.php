@@ -35,7 +35,7 @@
 <div class="row">
 			<ol class="breadcrumb">
 				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-				<li class="active">Cadastro de Usuário</li>
+				<li class="active">Cadastro de Projeto</li>
 			</ol>
 		</div><!--/.row-->
 		
@@ -112,7 +112,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button"  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Usuário</h4>
+                <h4 class="modal-title">Projeto</h4>
             </div>
              <form class="form-group" id="consulta_modal" action='' onsubmit="" method="post">
                 <div class="modal-body">
@@ -190,7 +190,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button"  class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Usuário</h4>
+                <h4 class="modal-title">Projeto</h4>
             </div>
              <form class="form-group" id="deleta_modal" action='' onsubmit="" method="post">
                 <div class="modal-body">
