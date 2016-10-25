@@ -50,15 +50,13 @@
 				if($codigo!=''){				
 					$projetos = $conexao->select('*')
 										  ->from('projeto')
-										  ->where('codigo = '.$codigo)
-										  ->limit(1)
+										  ->where("codigo = '".$codigo."'")
 										  ->executeNGet(); 					
 				}
 				else if($nome!=''){				
 					$projetos = $conexao->select('*')
 										  ->from('projeto')
-										  ->where('nome = '.$nome)
-										  ->limit(1)
+										  ->where("nome = '".$nome."'")
 										  ->executeNGet(); 
 					
 				}
