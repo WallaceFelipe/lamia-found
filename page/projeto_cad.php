@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 									 <input type="hidden" value="projeto_cad" name="p">
                         	
                             <label>Código <?php echo $codigoErr; ?></label>
-                            <input type="text" name="codigo" class="form-control" value="<?php echo $codigo; ?>" required> 
+                            <input type="text" name="codigo" class="form-control" value="<?php echo $codigo; ?>" maxlength="6" size="6" required > 
                        
                             <label>Nome <?php echo $nomeErr; ?></label>
                             <input type="text" name="nome" class="form-control" value="<?php echo $nome; ?>" required> 
