@@ -17,6 +17,7 @@
 				else $results =	$myProjeto->sql_read('','','');
 				break;
 			case 'alterar':
+                echo $_POST['categoria'];
 				$myProjeto->sql_update($_POST['codigo'],
 									   $_POST['nome'],
 									   $_POST['categoria'],
@@ -132,10 +133,10 @@
 
                         <div class="col-sm-4">
                             <label>Categoria</label>
-                            <select id="modalCategoria"  class="datepicker form-control">
+                            <select name="categoria" id="modalCategoria"  class="datepicker form-control">
 		                                <option id="OPpesquisa" value="pesquisa">Pesquisa</option>
 		                                <option id="OPcompeticaotecnologica" value="competicaotecnologica">Competição Tecnológica</option>
-		                                <option id="OPinovacaoensino"  value="inovacaoensino">Inovação no Ensino</option>
+		                                <option d="OPinovacaoensino"  value="inovacaoensino">Inovação no Ensino</option>
 		                                <option id="OPmanutencaoreforma" value="manutencaoreforma">Manutenção e Reforma</option>
 		                                <option id="OPpequenasobras" value="pequenasobras">Pequenas Obras</option>
 		                            	</select>
