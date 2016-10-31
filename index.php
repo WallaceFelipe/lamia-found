@@ -4,6 +4,12 @@ $pagina = 'inicial.php';
 if(isset($_GET['p'])){
 	//baseado no atributo p ele define qual pagina inclui
 	switch($_GET['p']){
+
+		case 'criterio':
+			$pagina = 'criterio.php';
+			$titulo = "Critérios de Avaliação";
+			break;
+
 		case 'usuario_cad':
 			$pagina = 'usuario_cad.php';
 			$titulo = 'Cadastrar Usuário';
@@ -22,6 +28,12 @@ if(isset($_GET['p'])){
 			$titulo = 'Consultar Projetos';
 			break;
 		default:
+			if(is_file('page/'.$_GET['p'].'.php')){
+				$pagina = $_GET['p'].'.php';
+				$titulo = ucwords($_GET['p']);
+				break;
+			}
+
 			$pagina = 'inicial.php';
 			$titulo = 'Bem vindo!';
 
@@ -104,6 +116,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			<li <?php if ($_GET['p'] == 'usuario_consulta') echo "class='active'"; ?> ><a href="index.php?p=usuario_consulta"><svg class="glyph stroked eye"><use xlink:href="#stroked-eye"></use></svg> Consulta Usuário</a></li>
 			<li <?php if ($_GET['p'] == 'projeto_cad') echo "class='active'"; ?> ><a href="index.php?p=projeto_cad"><svg class="glyph stroked open folder"><use xlink:href="#stroked-open-folder"/></svg>Cadastrar Projeto</a> </li>
 			<li <?php if ($_GET['p'] == 'projeto_consulta') echo "class='active'"; ?> ><a href="index.php?p=projeto_consulta"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Consultar Projeto</a> </li>
+			<li <?php if ($_GET['p'] == 'criterio') echo "class='active'"; ?> ><a href="index.php?p=criterio"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Critérios de Avaliação</a> </li>
+			<li <?php if ($_GET['p'] == 'repassefinanceiro') echo "class='active'"; ?> ><a href="index.php?p=repassefinanceiro"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Repasses Financeiros</a> </li>
 			
 			<li role="presentation" class="divider"></li>
 			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
