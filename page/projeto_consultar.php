@@ -3,82 +3,7 @@
 include('class/Conexao.class.php');
 $conexao = new Conexao();
 
-
-if ($_POST['acao'] == 'avaliar') {
-	$criterios = explode(";", $_POST['listaCriterios']);
-	
-	$dataExp = explode("/",$_POST['data']);
-	$data = $dataExp[2].$dataExp[1].$dataExp[0];
-	
-	if (floatval($_POST['nota']) > 6) {
-		$status = "aprovado";
-	} else {
-		$status = "reprovado";
-	}
-
-	$array = array(
-		'codProjeto' => $_POST['codProjeto'],
-		'codAvaliador' => $_POST['codAvaliador'],
-		'nota' => $_POST['nota'],
-		'data' => $data
-	);
-	if (!empty($_POST['sugestao'])) {
-		$array['sugestao'] = $_POST['sugestao'];
-	}
-	
-	if ($conexao->insert('avaliacao', $array)) {
-		$idAvaliacao = $conexao->getCodigo();
-		$array = array ('status' => $status);
-		if($conexao->update('projeto',$array, $_POST['codProjeto'], 'id')) {
-			foreach ($criterios as $criterio) {
-				if ($criterio != "") {
-					$array = array (
-						'idAvaliacao' => $idAvaliacao,
-						'idCriterio' => $criterio,
-						'nota' => $_POST[$criterio],
-						'peso' => $_POST['peso_'.$criterio]
-					);
-					if ($conexao->insert('itemavaliacao', $array)) {
-						echo "<script>alert('ok');</script>";
-					}
-				}
-			}
-		}
-	}
-
-
-}
-
-
-
-switch ($user->categoria) {
-	case 'pesquisa':
-		$msg = "Pesquisa";
-		break;
-	case 'inovacaoensino':
-		$msg = "Inovação em Ensino";
-		break;
-	case 'competicaotecnologica':
-		$msg = "Competição Tecnológica";
-		break;
-	case 'manutencaoreforma':
-		$msg = "Manutenção e Reforma";
-		break;
-	case 'pequenasobras':
-		$msg = "Pequenas Obras";
-		break;
-	default:
-		$msg = "Você não é um Avaliador";
-		break;
-}
-
-$criterios = $conexao->select('*')->from('criteriodeavaliacao')->where("status = 1 and categoria = '$user->categoria'")->executeNGet();
-
-if (count($criterios) == 0) {
-	echo "<script>alert('Não há critério de avaliação para a sua categoria. Por favor, cadastre ao menos um critério.');
-			window.location.href = 'index.php?p=criterio'</script>";
-}
-$dados = $conexao->select('*')->from('projeto')->where("status ='candidato' and categoria = '$user->categoria'")->executeNGet();
+$dados = $conexao->select('*')->from('projeto')->executeNGet();
 
 ?>
 <div class="row">
@@ -107,7 +32,6 @@ $dados = $conexao->select('*')->from('projeto')->where("status ='candidato' and 
 				<table class='table table-boredered table-hover'>
 					<thead>
 						<tr>
-							<th>Status</th>
 							<th>Código</th>
 							<th>Nome</th>
 						</tr>
@@ -115,7 +39,6 @@ $dados = $conexao->select('*')->from('projeto')->where("status ='candidato' and 
 					<tbody>
 						<?php $index=1; foreach($dados as $d){ ?>
 						<tr>
-							<td><?php echo $d['status']; ?></td>
 							<td><?php echo $d['codigo']; ?></td>
 							<td><?php echo $d['nome']; ?></td>
 							<td class="text-right">

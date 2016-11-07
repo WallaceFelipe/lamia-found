@@ -46,6 +46,10 @@ class Usuario {
         }
     }
 
+    function getTipo(){
+        return $this->tipo;
+    }
+
     function getId() {
         return $this->id;
     }
