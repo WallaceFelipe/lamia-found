@@ -9,9 +9,12 @@
 		//validar com hash aqui
 		$conexao = new Conexao();
 		
-		$id = $conexao->select('id')->from('usuario')->where("login = '$login' and senha = '$senha'")->executeNGet();
-		$id = $id[0]['id'];
-		if(count($id) == 1) {
+		//$id = $conexao->select('id')->from('usuario')->where("login = '$login' and senha = '$senha'")->executeNGet();
+		//$id = $id[0]['id'];
+
+		$id = $conexao->select('id')->from('usuario')->where("login = '$login' and senha = '$senha'")->limit(1)->executeNGet('id');
+
+		if($id) {
 			session_start();
 			$_SESSION['logado'] = true;
 			$_SESSION['usuario'] = new Usuario($id);
