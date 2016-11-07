@@ -1,4 +1,12 @@
 <?php
+require_once('class/Usuario.class.php');
+session_start();
+
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] == false) {
+	header("Location: login.php");
+}
+
+$user = $_SESSION['usuario'];
 
 $pagina = 'inicial.php';
 if(isset($_GET['p'])){
@@ -90,7 +98,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				<a class="navbar-brand" href="#"><span>Fund</span>Razor</a>
 				<ul class="user-menu">
 					<li class="dropdown pull-right">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo $user->login; ?> <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
 							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
@@ -118,6 +126,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			<li <?php if ($_GET['p'] == 'projeto_consulta') echo "class='active'"; ?> ><a href="index.php?p=projeto_consulta"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Consultar Projeto</a> </li>
 			<li <?php if ($_GET['p'] == 'criterio') echo "class='active'"; ?> ><a href="index.php?p=criterio"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Critérios de Avaliação</a> </li>
 			<li <?php if ($_GET['p'] == 'repassefinanceiro') echo "class='active'"; ?> ><a href="index.php?p=repassefinanceiro"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Repasses Financeiros</a> </li>
+			<li <?php if ($_GET['p'] == 'avaliar') echo "class='active'"; ?> ><a href="index.php?p=avaliar"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Avaliar Projetos</a> </li>
 			
 			<li role="presentation" class="divider"></li>
 			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
