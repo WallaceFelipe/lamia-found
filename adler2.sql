@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 07, 2016 at 12:50 PM
+-- Generation Time: Nov 07, 2016 at 04:15 PM
 -- Server version: 5.5.53-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.20
 
@@ -34,7 +34,15 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
   `nota` float NOT NULL,
   `sugestao` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `avaliacao`
+--
+
+INSERT INTO `avaliacao` (`id`, `codProjeto`, `codAvaliador`, `data`, `nota`, `sugestao`) VALUES
+(12, 9, 26, '2016-11-07', 7.89, NULL),
+(13, 11, 26, '2016-11-07', 8.57, NULL);
 
 -- --------------------------------------------------------
 
@@ -150,7 +158,17 @@ CREATE TABLE IF NOT EXISTS `itemavaliacao` (
   `nota` float NOT NULL,
   `peso` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `itemavaliacao`
+--
+
+INSERT INTO `itemavaliacao` (`id`, `idAvaliacao`, `idCriterio`, `nota`, `peso`) VALUES
+(6, 12, 11, 6, 6),
+(7, 12, 13, 9.3, 8),
+(8, 13, 11, 8, 6),
+(9, 13, 13, 9, 8);
 
 -- --------------------------------------------------------
 
@@ -169,16 +187,19 @@ CREATE TABLE IF NOT EXISTS `projeto` (
   `prazomaximo` date DEFAULT NULL,
   `valorminimo` double DEFAULT NULL,
   `valormaximo` double DEFAULT NULL,
+  `imagem` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `codigo` (`codigo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `projeto`
 --
 
-INSERT INTO `projeto` (`id`, `codigo`, `nome`, `categoria`, `status`, `duracaoprevista`, `valor`, `prazomaximo`, `valorminimo`, `valormaximo`) VALUES
-(9, 'prj100', 'Black Bee', 'pesquisa', 'candidato', '20', 20000, NULL, NULL, NULL);
+INSERT INTO `projeto` (`id`, `codigo`, `nome`, `categoria`, `status`, `duracaoprevista`, `valor`, `prazomaximo`, `valorminimo`, `valormaximo`, `imagem`) VALUES
+(9, 'prj100', 'Black Bee', 'pesquisa', 'aprovado', '20', 20000, NULL, NULL, NULL, NULL),
+(10, 'prj909', 'Reforma IMC', 'manutencaoreforma', 'candidato', '60', 3500000, NULL, NULL, NULL, NULL),
+(11, 'pr3000', 'Uairrior', 'pesquisa', 'aprovado', '30', 12000, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

@@ -233,7 +233,7 @@ $dados = $conexao->select('*')->from('projeto')->where("status ='candidato' and 
                 <input type="text" class="form-control" id="duracao" value="" readonly>
               </div>
 
-							<div class="form-group col-sm-8">
+			<div class="form-group col-sm-8">
                 <label for="">Valor:</label>
                 <input type="text" class="form-control" id="valor" value="" readonly>
               </div>
