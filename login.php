@@ -3,15 +3,23 @@
 	require_once('class/Usuario.class.php');
 
 	if (isset($_POST['acao']) && $_POST['acao'] == 'logar') {
+
+		// Fazer do jeito abaixo possibilita um MYSQLInjection
 		$login = $_POST['login'];
 		$senha = $_POST['senha'];
 
-		//validar com hash aqui
 		$conexao = new Conexao();
+
+		// O jeito correto é
+		$login = $conexao->escape($_POST['login']);
+		$senha = $conexao->escape($_POST['senha']);
 		
-		$id = $conexao->select('id')->from('usuario')->where("login = '$login' and senha = '$senha'")->executeNGet();
-		$id = $id[0]['id'];
-		if(count($id) == 1) {
+		//$id = $conexao->select('id')->from('usuario')->where("login = '$login' and senha = '$senha'")->executeNGet();
+		//$id = $id[0]['id'];
+
+		$id = $conexao->select('id')->from('usuario')->where("login = '$login' and senha = '$senha'")->limit(1)->executeNGet('id');
+
+		if($id) {
 			session_start();
 			$_SESSION['logado'] = true;
 			$_SESSION['usuario'] = new Usuario($id);

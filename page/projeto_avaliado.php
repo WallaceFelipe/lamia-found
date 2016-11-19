@@ -196,23 +196,23 @@ $projetos = $conexao->execute($sql);
 
             //Inserir os criterios no modal
 
-            })
+            });
 			
-
-		});
-
         $('#codAvaliador').val(dados['codAvaliador']);
         $('#codProjeto').val(dados['codigo']);
         $('#dataAvaliacao').val(dados['data']);
         $('#nome').val(dados['nome']);
         $('#duracao').val(dados['duracaoprevista']);
         $('#valor').val(dados['valor']);
+        
         if (dados['sugestao'] == null) {
             $('#sugestao').val('Não foi registrado nenhuma sugestão');
         } else {
             $('#sugestao').val(dados['sugestao']);
         }
+
         $("#consultaModal").modal("show");
+
     }
 
     function remover(id) {

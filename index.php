@@ -18,6 +18,10 @@ if(isset($_GET['p'])){
 			$titulo = "Critérios de Avaliação";
 			break;
 
+		case 'projeto_consultar':
+			$pagina = 'projeto_consultar.php';
+			$titulo = 'Consultar Projeto';
+
 		case 'usuario_cad':
 			$pagina = 'usuario_cad.php';
 			$titulo = 'Cadastrar Usuário';
@@ -131,7 +135,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			<li <?php if ($_GET['p'] == 'criterio') echo "class='active'"; ?> ><a href="index.php?p=criterio"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Critérios de Avaliação</a> </li>
 			<li <?php if ($_GET['p'] == 'repassefinanceiro') echo "class='active'"; ?> ><a href="index.php?p=repassefinanceiro"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Repasses Financeiros</a> </li>
 			<li <?php if ($_GET['p'] == 'avaliar') echo "class='active'"; ?> ><a href="index.php?p=avaliar"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Avaliar Projetos</a> </li>
+
 			<li <?php if ($_GET['p'] == 'projeto_avaliado') echo "class='active'"; ?> ><a href="index.php?p=projeto_avaliado"><svg class="glyph stroked star"><use xlink:href="#stroked-star"/></svg>Projetos Avaliados</a> </li>
+
 			
 			<li role="presentation" class="divider"></li>
 			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>
