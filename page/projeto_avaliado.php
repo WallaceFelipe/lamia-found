@@ -51,7 +51,7 @@ $projetos = $conexao->execute($sql);
             </div>
             <div class="pane-body">
                 
-                <form action='index.php?p=usuario_consulta' method='post' class='form-inline'>
+                <!--<form action='index.php?p=usuario_consulta' method='post' class='form-inline'>
                     <div class="form-group  col-lg-10 col-lg-offset-1">
                         <input type="text" name="nome" value="" class='form-control' placeholder="Nome">
                         <input type="text" name="login" value="" class='form-control' placeholder="Login">
@@ -61,7 +61,7 @@ $projetos = $conexao->execute($sql);
                 </form>
 
                 <br>
-                <br>
+                <br>-->
 
                 <table class='table table-boredered <table-hover></table-hover>'>
                     <thead>
@@ -194,7 +194,20 @@ $projetos = $conexao->execute($sql);
             console.log(criterio);
             $('#nomeAvaliador').val(dado['avaliador'][0]['nome']);
 
-            //Inserir os criterios no modal
+            var table = $("#criterios");
+            table.empty();
+
+            for (var i = 0; i < criterio.length; i++) {
+                var estrutura = "<tr>"+
+                                    "<td>"+criterio[i]['descricao']+"</td>"+
+                                    "<td><input class='form-control' value='"+ criterio[i]['nota']+"' readonly></td>"+
+                                "</tr>";
+                                
+                table.append(estrutura);
+            }
+
+            table.append("<tr class='active'><td>Nota Final</td><td>"+dados['nota']+"</td></tr>");
+
 
             });
 			
