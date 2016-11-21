@@ -191,91 +191,91 @@ $dados = $conexao->select('*')->from('projeto')->where("status ='candidato' and 
 
       <form method="post" id="form" action="">
 
-	      <div class="modal-body">
+		<div class="modal-body">
 	        
-					<div class="col-lg-12">
+			<div class="col-lg-12">
 
-						<input type="hidden" name="acao"  value="avaliar">
-						<input type="hidden" name="codProjeto" id="codProjeto" value="">
-						
-						<div>
-							<h4>Dados do Avaliador:</h4>
-							<div class="form-group col-sm-2">
-								<label for="">Código:</label>
-								<input type="text" id="codigo" name="codAvaliador" class="form-control" value="<?php echo $user->getId(); ?>" readonly>
-							</div>
-
-							<div class="form-group col-sm-6">
-                <label for="">Avaliador:</label>
-                <input type="text" class="form-control" value="<?php echo $user->nome;?>" readonly>
-							</div>
-
-              <div class="form-group col-sm-4">
-                <label for="">Data:</label>
-                <input type="text" class="form-control" name="data" value="<?php echo date('d/m/Y'); ?>" readonly>
-              </div>
-						</div>
-						</hr>
-						<div>
-							<h4>Dados do Projeto:</h4>
-							<div class="form-group col-sm-4">
-								<label for="">Projeto:</label>
-								<input type="text" id="projeto" class="form-control" value="" readonly>
-							</div>
-
-							<div class="form-group col-sm-8">
-                <label for="">Nome:</label>
-                <input type="text" class="form-control" id="nome" value="" readonly>
-							</div>
-
-              <div class="form-group col-sm-4">
-                <label for="">Duração Prevista:</label>
-                <input type="text" class="form-control" id="duracao" value="" readonly>
-              </div>
-
-			<div class="form-group col-sm-8">
-                <label for="">Valor:</label>
-                <input type="text" class="form-control" id="valor" value="" readonly>
-              </div>
-						</div>
-
-							<div class="form-group">
-								<table class="table table-condensed table-hover">
-									<thead>
-										<tr>
-											<th class="col-sm-8">Critério:</th>
-											<th>Nota:</th>
-										</tr>
-									</thead>
-									<tbody id="criterios">
-										<?php foreach($criterios as $c) {
-											$listCriterio .= $c['id'].";"; 
-											?>
-											<tr>
-												<td><?php echo $c['descricao']; ?></td>
-												<td><input type="text" class="form-control" id="<?php echo $c['peso'];?>" name="<?php echo $c['id']; ?>" value="" onkeyup="calcNota();"></td>
-												<input type="text" class="hidden" name="peso_<?php echo $c['id']; ?>" value="<?php echo $c['peso'];?>">
-											</tr>
-										<?php } ?>
-											<tr class="active">
-												<td>Nota Final</td>
-												<td><input type="text" id="nota" name="nota" value="" readonly></td>
-											</tr>
-									</tbody>
-								</table>
-								<input type="text" class="hidden" value="<?php echo $listCriterio; ?>" name='listaCriterios'>
-							</div>
-
-							<div class="form-group">
-								<label for="">Sugestões de Melhoria</label>
-								<textarea rows="3" class="form-control" name="sugestao"></textarea>
-							</div>
-						
-						<div class="clearfix"></div>
-						
+				<input type="hidden" name="acao"  value="avaliar">
+				<input type="hidden" name="codProjeto" id="codProjeto" value="">
+				
+				<div>
+					<h4>Dados do Avaliador:</h4>
+					<div class="form-group col-sm-2">
+						<label for="">Código:</label>
+						<input type="text" id="codigo" name="codAvaliador" class="form-control" value="<?php echo $user->getId(); ?>" readonly>
 					</div>
 
-					<div class="clearfix"></div>
+					<div class="form-group col-sm-6">
+						<label for="">Avaliador:</label>
+						<input type="text" class="form-control" value="<?php echo $user->nome;?>" readonly>
+					</div>
+
+					<div class="form-group col-sm-4">
+						<label for="">Data:</label>
+						<input type="text" class="form-control" name="data" value="<?php echo date('d/m/Y'); ?>" readonly>
+					</div>
+				</div>
+				</hr>
+				<div>
+					<h4>Dados do Projeto:</h4>
+					<div class="form-group col-sm-4">
+						<label for="">Projeto:</label>
+						<input type="text" id="projeto" class="form-control" value="" readonly>
+					</div>
+
+					<div class="form-group col-sm-8">
+						<label for="">Nome:</label>
+						<input type="text" class="form-control" id="nome" value="" readonly>
+					</div>
+
+					<div class="form-group col-sm-4">
+						<label for="">Duração Prevista:</label>
+						<input type="text" class="form-control" id="duracao" value="" readonly>
+					</div>
+
+					<div class="form-group col-sm-8">
+						<label for="">Valor:</label>
+						<input type="text" class="form-control" id="valor" value="" readonly>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<table class="table table-condensed table-hover">
+						<thead>
+							<tr>
+								<th class="col-sm-8">Critério:</th>
+								<th>Nota:</th>
+							</tr>
+						</thead>
+						<tbody id="criterios">
+							<?php foreach($criterios as $c) {
+								$listCriterio .= $c['id'].";"; 
+								?>
+								<tr>
+									<td><?php echo $c['descricao']; ?></td>
+									<td><input type="text" class="form-control" id="<?php echo $c['peso'];?>" name="<?php echo $c['id']; ?>" value="" onkeyup="calcNota();"></td>
+									<input type="text" class="hidden" name="peso_<?php echo $c['id']; ?>" value="<?php echo $c['peso'];?>">
+								</tr>
+							<?php } ?>
+							<tr class="active">
+								<td>Nota Final</td>
+								<td><input type="text" id="nota" name="nota" value="" readonly></td>
+							</tr>
+						</tbody>
+					</table>
+					<input type="text" class="hidden" value="<?php echo $listCriterio; ?>" name='listaCriterios'>
+				</div>
+
+				<div class="form-group">
+					<label for="">Sugestões de Melhoria</label>
+					<textarea rows="3" class="form-control" name="sugestao"></textarea>
+				</div>
+				
+				<div class="clearfix"></div>
+				
+			</div>
+
+			<div class="clearfix"></div>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>

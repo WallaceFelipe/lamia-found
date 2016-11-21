@@ -34,41 +34,94 @@ if($_GET['finalizar']){
 <div class="row">
 	
 	<?php 
-	foreach($tipos as $k=>$titulo){
-		$projeto = $conexao->select('*')->from('projeto')->where("status = 'aprovado' and categoria = '".$_GET['cat']."'")->executeNGet(); 
+	if (isset($_GET['cat'])) {
+		$projeto = $conexao->select('*')->from('projeto')->where("status = 'aprovado' and categoria = '".$_GET['cat']."'")->executeNGet();
+		$titulo = $tipos[$_GET['cat']];
+
 		if(count($projeto) > 0){ ?>
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">Projetos de <?php echo $titulo;  ?></div>
-				<div class="panel-body">
-					<?php 
-					
-					foreach($projeto as $p){ ?>
-					
-						<div class="col-sm-3">
-							<div class="col-lg-12">
-								<a class="prj_link" href="index_public.php">
-								<img src="upload/<?php echo $p['imagem']; ?>" alt="<?php echo $p['nome']; ?>" class="img-responsive">
-								</a>
-								<h3><?php echo $p['nome']; ?></h3>
-								<?php /*if($_SESSION['usuario']->getTipo() == 'gestordeprojeto' && $p['status'] != 'finalizado'){ ?>
-								<button onclick="if(confirm('Tem certeza?')) location.href='index_public.php?p=inicial_public&finalizar=<?php echo $p['id']; ?>';" class="btn btn-primary btn-xs">Finalizar</button>
-								<?php  }*/ ?>
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Projetos de <?php echo $titulo;  ?></div>
+					<div class="panel-body">
+						<?php 
+						
+						foreach($projeto as $p){ ?>
+						
+							<div class="col-sm-3">
+								<div class="col-lg-12">
+									<a class="prj_link" href="index_public.php?p=ver_projeto&id=<?php echo $p['id']?>">
+									<img src="upload/<?php echo $p['imagem']; ?>" alt="<?php echo $p['nome']; ?>" class="img-responsive">
+									</a>
+									<h3><?php echo $p['nome']; ?></h3>
+									<?php
+									if (isset($_SESSION['usuario'])) 
+										if($_SESSION['usuario']->getTipo() == 'gestordeprojeto' && $p['status'] != 'finalizado'){ ?>
+									<button onclick="if(confirm('Tem certeza?')) location.href='index_public.php?p=inicial_public&finalizar=<?php echo $p['id']; ?>';" class="btn btn-primary btn-xs">Finalizar</button>
+									<?php  } ?>
+									<div class="clearfix"></div>
+								</div>
 								<div class="clearfix"></div>
 							</div>
-							<div class="clearfix"></div>
-						</div>
-					
-					<?php } ?>
+						
+						<?php } ?>
+					</div>
 				</div>
 			</div>
-		</div>
-	<?php } 
-
-	}
-	?>
-
+		<?php } else { ?>
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Projetos de <?php echo $titulo;  ?></div>
+					<div class="panel-body">
+						<p>Não existem projetos nessa categoria.</p>
+					</div>
+				</div>
+			</div>
+		<?php }
+	
+	} else {
+		foreach($tipos as $k=>$titulo){
+			$projeto = $conexao->select('*')->from('projeto')->where("status = 'aprovado' and categoria = '".$k."'")->limit(4)->executeNGet();
+			if(count($projeto) > 0){ ?>
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">Projetos de <?php echo $titulo;  ?></div>
+						<div class="panel-body">
+							<?php 
+							
+							foreach($projeto as $p){ ?>
+							
+								<div class="col-sm-3">
+									<div class="col-lg-12">
+										<a class="prj_link" href="index_public.php?p=ver_projeto&id=<?php echo $p['id']?>">
+										<img src="upload/<?php echo $p['imagem']; ?>" alt="<?php echo $p['nome']; ?>" class="img-responsive">
+										</a>
+										<h3><?php echo $p['nome']; ?></h3>
+										<?php 
+										if (isset($_SESSION['usuario']))
+											if($_SESSION['usuario']->getTipo() == 'gestordeprojeto' && $p['status'] != 'finalizado'){ ?>
+										<button onclick="if(confirm('Tem certeza?')) location.href='index_public.php?p=inicial_public&finalizar=<?php echo $p['id']; ?>';" class="btn btn-primary btn-xs">Finalizar</button>
+										<?php  } ?>
+										<div class="clearfix"></div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+							
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+			<?php } else { ?>
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">Projetos de <?php echo $titulo;  ?></div>
+						<div class="panel-body">
+							<p>Não existem projetos nessa categoria.</p>
+						</div>
+					</div>
+				</div>
+			<?php }
+		}
+	} ?>
 	
 
-	
 </div><!--/.row-->	

@@ -29,6 +29,10 @@
 		$msg = "Login ou senha inválido. Tente novamente!";
 
 	}
+
+	if(isset($_GET['c']) && $_GET['c'] == 'ok') {
+		$msg = "Cadastro realizado com sucesso! Por favor, faça seu login.";
+	}
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +40,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Forms</title>
+<title>Login</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/datepicker3.css" rel="stylesheet">
@@ -56,6 +60,7 @@
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">
 					<h2>Log in</h2>
+					<p><?php echo $msg; ?></p>
 				</div>
 				<div class="panel-body">
 					<form role="form" action="" method="post" >
@@ -66,13 +71,10 @@
 							<div class="form-group">
 								<input class="form-control" placeholder="Senha" name="senha" type="password" value="" required>
 							</div>
-							<div class="checkbox">
-								<label>
-									<input name="remember" type="checkbox" value="Remember Me">Remember Me
-								</label>
-							</div>
 							<button type="submit" name='acao' value='logar' class="btn btn-primary">Login</button>
 						</fieldset>
+						</br>
+						<p>Ainda não se é membro? <a href="cadastro.php">Cadastre-se!</a></p>
 					</form>
 				</div>
 			</div>

@@ -81,7 +81,7 @@
                             <td><input name="acao" type="submit" value="Consultar"></td>
                         </tr>
                     </tbody>
-                    </table>                            
+                </table>                            
             </form>
             <table class='table table-boredered <table-hover></table-hover>'>
             <thead>
