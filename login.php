@@ -1,6 +1,7 @@
 <?php
 	require_once('class/Conexao.class.php');
 	require_once('class/Usuario.class.php');
+	
 
 	if (isset($_POST['acao']) && $_POST['acao'] == 'logar') {
 
@@ -23,12 +24,15 @@
 			session_start();
 			$_SESSION['logado'] = true;
 			$_SESSION['usuario'] = new Usuario($id);
-			if ($_SESSION['usuario']->tipo == 'usuariopublico') {
-				header('Location: index_public.php');	
-			} else {
-				header('Location: index.php');
-			}
-			
+			if (isset($_SESSION['idfinanciado'])) {
+				$url = 'Location: index_public.php?p=financiar_projeto&id='.$_SESSION['idfinanciado'];
+			}else
+				if ($_SESSION['usuario']->tipo == 'usuariopublico') {
+					$url = 'Location: index_public.php';	
+				} else {
+					$url = 'Location: index.php';
+				}
+			header($url);
 		}
 
 		$msg = "Login ou senha inválido. Tente novamente!";

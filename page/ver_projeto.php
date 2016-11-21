@@ -14,7 +14,7 @@
 <div class="row">
     <ol class="breadcrumb">
         <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-        <li class="active">Perfil</li>
+        <li class="active">Projetos</li>
     </ol>
 </div><!--/.row-->
 
@@ -83,7 +83,7 @@
                                     <td><?php echo $recompensa['descricao']; ?></td>
                                     <td><?php echo $recompensa['valor']; ?></td>
                                     <td><?php echo $recompensa['limite']; ?></td>
-                                    <td><button type="button" class="btn btn-info">Pegar</button></td>
+                                    <td><a href="index_public.php?p=financiar_projeto&id=<?php echo $recompensa['id'];?>" class="btn btn-info" >Pegar</a></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>
