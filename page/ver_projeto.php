@@ -6,6 +6,7 @@
     }
 
     $projeto = $conexao->select('*')->from('projeto')->where("id = '".$_GET['id']."'")->executeNGet();
+    $recompensas = $conexao->select('*')->from('recompensa')->where("idprojeto = '".$_GET['id']."'")->executeNGet();
     $projeto = $projeto[0]; 
     $coordenador = $conexao->select('nome')->from('usuario')->where("id = '".$projeto['coordenador']."'")->executeNGet();
 ?>
@@ -25,7 +26,7 @@
             <!-- Nav tabs -->
                 <ul class="nav nav-tabs " role="tablist">
                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Financiar</a></li>
                     
                 </ul>
 
@@ -70,20 +71,31 @@
                                     <td>Recompensa</td>
                                     <td>Descrição</td>
                                     <td>Valor da Recompensa (R$)</td>
+                                    <td>Limite</td>
+                                    <td></td>
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php
+                                foreach($recompensas as $recompensa) { ?>
                                 <tr>
-                                    <td>Chaveiro</td>
-                                    <td>Chaveiro e placa de agradecimento</td>
-                                    <td>22,00</td>
+                                    <td><?php echo $recompensa['titulo']; ?></td>
+                                    <td><?php echo $recompensa['descricao']; ?></td>
+                                    <td><?php echo $recompensa['valor']; ?></td>
+                                    <td><?php echo $recompensa['limite']; ?></td>
+                                    <td><button type="button" class="btn btn-info">Pegar</button></td>
                                 </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="profile">
-                        Profile conteudo
+                        <form>
+                            <div class="form-control">
+
+                            </div>
+                        </form>
                     </div>
                     
                 </div>

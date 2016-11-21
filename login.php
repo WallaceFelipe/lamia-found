@@ -23,7 +23,12 @@
 			session_start();
 			$_SESSION['logado'] = true;
 			$_SESSION['usuario'] = new Usuario($id);
-			header('Location: index.php');
+			if ($_SESSION['usuario']->tipo == 'usuariopublico') {
+				header('Location: index_public.php');	
+			} else {
+				header('Location: index.php');
+			}
+			
 		}
 
 		$msg = "Login ou senha inválido. Tente novamente!";
@@ -60,9 +65,9 @@
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">
 					<h2>Log in</h2>
-					<p><?php echo $msg; ?></p>
 				</div>
 				<div class="panel-body">
+					<div class="form-group"><p><?php echo $msg;?></p></div>
 					<form role="form" action="" method="post" >
 						<fieldset>
 							<div class="form-group">
