@@ -7,6 +7,7 @@ $tipos = array(
 	'inovacaoensino' => 'Inovação no Ensino', 
 	'manutencaoreforma' => 'Manutenção e Reforma', 
 	'pequenasobras' => 'Pequenas Obras');
+
 if($_GET['finalizar']){
 
 	if($_SESSION['usuario']->getTipo() == 'gestordeprojeto'){
@@ -34,7 +35,7 @@ if($_GET['finalizar']){
 	
 	<?php 
 	foreach($tipos as $k=>$titulo){
-		$projeto = $conexao->select('*')->from('projeto')->where("status = 'aprovado' and categoria = '$k'")->executeNGet(); 
+		$projeto = $conexao->select('*')->from('projeto')->where("status = 'aprovado' and categoria = '".$_GET['cat']."'")->executeNGet(); 
 		if(count($projeto) > 0){ ?>
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -50,9 +51,9 @@ if($_GET['finalizar']){
 								<img src="upload/<?php echo $p['imagem']; ?>" alt="<?php echo $p['nome']; ?>" class="img-responsive">
 								</a>
 								<h3><?php echo $p['nome']; ?></h3>
-								<?php if($_SESSION['usuario']->getTipo() == 'gestordeprojeto' && $p['status'] != 'finalizado'){ ?>
+								<?php /*if($_SESSION['usuario']->getTipo() == 'gestordeprojeto' && $p['status'] != 'finalizado'){ ?>
 								<button onclick="if(confirm('Tem certeza?')) location.href='index_public.php?p=inicial_public&finalizar=<?php echo $p['id']; ?>';" class="btn btn-primary btn-xs">Finalizar</button>
-								<?php  } ?>
+								<?php  }*/ ?>
 								<div class="clearfix"></div>
 							</div>
 							<div class="clearfix"></div>

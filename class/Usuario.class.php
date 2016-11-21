@@ -66,4 +66,12 @@ class Usuario {
         $this->cpf = $cpf;
     }
 
+    function getData() {
+        $data = explode("-", $this->dataNascimento);
+        $aux = $data[0];
+        $data[0] = $data[2];
+        $data[2] = $aux;
+        return join("-", $data); 
+    }
+
 }

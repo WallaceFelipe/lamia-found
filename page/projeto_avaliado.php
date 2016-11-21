@@ -13,7 +13,7 @@ if($_POST['action'] == 'getCriterio'){
 
     $avaliador = $conexao->select("*")->from('usuario')->where("id = ".$_POST['avaliador'])->executeNGet();
 
-    $dados = array ('avaliador' => $avaliador, 'criterios'=> $criterios);
+    $dados = array ('avaliador' => $avaliador[0]['nome'], 'criterios'=> $criterios);
 
     die(json_encode($dados));
 }
@@ -192,7 +192,7 @@ $projetos = $conexao->execute($sql);
 			var dado = JSON.parse(resposta);
             var criterio = dado['criterios'];
             console.log(criterio);
-            $('#nomeAvaliador').val(dado['avaliador'][0]['nome']);
+            $('#nomeAvaliador').val(dado['avaliador']);
 
             var table = $("#criterios");
             table.empty();
@@ -202,7 +202,7 @@ $projetos = $conexao->execute($sql);
                                     "<td>"+criterio[i]['descricao']+"</td>"+
                                     "<td><input class='form-control' value='"+ criterio[i]['nota']+"' readonly></td>"+
                                 "</tr>";
-                                
+
                 table.append(estrutura);
             }
 

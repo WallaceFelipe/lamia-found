@@ -2,6 +2,7 @@
 require_once('class/Usuario.class.php');
 session_start();
 
+
 if (!isset($_SESSION['logado']) || $_SESSION['logado'] == false) {
 	header("Location: login.php");
 }
@@ -12,6 +13,11 @@ $pagina = 'inicial.php';
 if(isset($_GET['p'])){
 	//baseado no atributo p ele define qual pagina inclui
 	switch($_GET['p']){
+
+		case 'profile':
+			$pagina = 'perfil.php';
+			$titulo = 'Perfil';
+			break;
 
 		case 'criterio':
 			$pagina = 'criterio.php';
@@ -43,6 +49,12 @@ if(isset($_GET['p'])){
 			$pagina = 'projeto_avaliado.php';
 			$titulo = 'Projetos Avaliados';
 			break;
+		case 'logout':
+			if($_GET['token'] === md5(session_id())) {
+				session_destroy();
+				header("location: login.php");
+				break;
+			}
 		default:
 			if(is_file('page/'.$_GET['p'].'.php')){
 				$pagina = $_GET['p'].'.php';
@@ -108,9 +120,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 					<li class="dropdown pull-right">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo $user->login; ?> <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
+							<li><a href="index.php?p=profile"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
 							<li><a href="#"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg> Settings</a></li>
-							<li><a href="#"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+							<li><a href="index.php?p=logout&token=<?php echo md5(session_id()); ?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
 						</ul>
 					</li>
 				</ul>
