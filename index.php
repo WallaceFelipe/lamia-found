@@ -4,7 +4,7 @@ session_start();
 
 
 if (!isset($_SESSION['logado']) || $_SESSION['logado'] == false) {
-	header("Location: login.php");
+	header("Location: index_public.php");
 }
 
 $user = $_SESSION['usuario'];

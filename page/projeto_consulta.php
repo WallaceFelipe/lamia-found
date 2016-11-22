@@ -1,4 +1,16 @@
 <?php
+
+if(isset($_POST['projeto'])){
+
+    include('../class/Conexao.class.php');
+    $con = new Conexao();
+    $id  = intval($_POST['projeto']);
+    $con->execute("delete from repassefinanceiro where idprojeto = '$id'");
+    $con->execute("delete from recompensa where idprojeto = '$id'");
+    $con->execute("delete from projeto where id = '$id'");
+    die('ok: '.$id);
+}
+
 	include("class/Projeto.class.php");
 	$results=NULL;
 	$myProjeto = new Projeto();
@@ -24,13 +36,13 @@
 									   $_POST['duracaoprevista'],
 									   $_POST['valor']);
 				break;
-			case 'deletar':
+
 			default:
-					$myProjeto->sql_delete($_POST['codigo']);
 				break;
 		}
 		
-	}	
+	}else
+    $results =  $myProjeto->sql_read('','','');	
 ?>
 
 <div class="row">
@@ -97,6 +109,12 @@
                     <td><a href="#" onclick='editar(<?php echo json_encode($result);?>);'><?php echo $result['nome'] ?></a></td>
                     <td><?php echo $result['categoria'] ?></td>
                     <td class="text-right">
+                        <button 
+                            type="button" 
+                            onclick="location.href='index.php?p=pro_editar&idprojeto=<?php echo $result['id']; ?>';" 
+                            class="btn btn-xs btn-primary">
+                                <i class="ghlyphicon glyphicon-pencil"></i>
+                            </button>
                         <button onclick='deletar(<?php echo json_encode($result);?>)'  id="remover_<?php echo $result['codigo']; ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></button>
                     </td>
                 </tr>
@@ -128,7 +146,7 @@
                     <div class="form-group row">
                         <div class="col-sm-8">
                             <label>Codigo</label>
-                            <input type="text" name="codigo" class="form-control" readonly>
+                            <input type="text" name="id" class="form-control" readonly>
                         </div>
 
                         <div class="col-sm-4">
@@ -157,22 +175,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col-sm-4">
-                            <label class="control-label">Prazo máximo</label>
-                            <input type="text" name="pais" class="form-control" readonly>
-                        </div>
-
-                        <div class="col-sm-4">
-                        <label>Valor Mínimo</label>
-                        <input type="text" name="estado" class="form-control" readonly>
-                        </div>
-                    
-                        <div class="col-sm-4">
-                        <label>Valor máximo</label>
-                        <input type="text" name="cidade" class="form-control" readonly>
-                        </div>
-                    </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     <button type="submit" name="acao" value="alterar" class="btn btn-success" onclick="enviar();">Salvar</button>
@@ -206,15 +208,15 @@
                     <div class="form-group row">
                         <div class="col-sm-8">
                             <label>Codigo</label>
-                            <input type="text" name="codigo" class="form-control" readonly>
+                            <input type="text" name="id" id="idProjeto" class="form-control" readonly>
                         </div>
 
                       
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="acao" value="deletar" class="btn btn-danger" onclick="enviar();">Deletar</button>
-                </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" name="acao" value="deletar" class="btn btn-danger" onclick="enviar();">Deletar</button>
+                    </div>
                 
                     </div>
 
@@ -235,7 +237,8 @@
         var container = document.getElementById('consulta_modal');
         var inputs = container.getElementsByTagName('input');
         for (index = 0; index < inputs.length; ++index) {
-            inputs[index].value = vetor[inputs[index].name];
+            if(inputs[index])
+                inputs[index].value = vetor[inputs[index].name];
         }
         $("#modalCategoria").find("option#OP"+vetor.categoria).attr("selected",true);
 
@@ -247,9 +250,20 @@
         var container = document.getElementById('deleta_modal');
         var inputs = container.getElementsByTagName('input');
         for (index = 0; index < inputs.length; ++index) {
-            inputs[index].value = vetor[inputs[index].name];
+            if(inputs[index])
+                inputs[index].value = vetor[inputs[index].name];
         }
         $("#delModal").modal("show");
     }
-    function enviar(){};
+    function enviar(){
+
+        $.post('page/projeto_consulta.php',
+            {projeto:$('#idProjeto').val()}).done(function(resposta){
+                console.log(resposta);
+            });
+
+        $("#delModal").modal("hide");
+        location.href='index.php?p=projeto_consulta';
+
+    };
 </script>

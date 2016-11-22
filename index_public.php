@@ -73,6 +73,9 @@ $tipos = array(
 			<?php foreach($tipos as $k=>$t) { ?>
 			<li <?php if ($_GET['cat'] == $k) echo "class='active'"; ?> ><a href="index_public.php?p=inicial_public&cat=<?php echo $k; ?>"><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo $t; ?></a></li>
 			<?php } ?>
+
+			<li <?php if ($_GET['p'] == 'relatorio_categoria') echo "class='active'"; ?> ><a href="index_public.php?p=relatorio_categoria"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Relatório dos Projetos por Categoria</a></li>
+
 			<!--
 
 			<li role="presentation" class="divider"></li>
