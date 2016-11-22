@@ -123,6 +123,9 @@ $tipos = array(
 			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
 			
 			$(".data").mask('00/00/0000');
+			$(".dataC").mask('00/0000');
+			$(".card").mask('0000.0000.0000.0000');
+			$(".cvv").mask('000');
 			$(".cpf").mask('000.000.000-00');
 			$(".money").mask("#.##0,00", {reverse: true});
 

@@ -41,13 +41,34 @@
                             <h4>Recompensa: <b><?php echo $recompensa['titulo'];?></b></h4>
                             <p><?php echo $recompensa['descricao'];?></p>
                         </div>
-
+                        <br>
                         <div class="row">
-                            <!-- colocar o form de preenchimento de dados de cartão -->
+                            <form>
+                                <div class="form-group col-sm-3">
+                                    <label>Número do Cartão</label>
+                                    <input type="text" name="cartao" class="card form-control" value="" placeholder="1234.1234.1234.1234">
+                                </div>
+
+                                <div class="form-group col-sm-2">
+                                    <label>CVV</label>
+                                    <input type="text" name="cvv" class="cvv form-control" value="" placeholder="123">
+                                </div>
+
+                                <div class="form-group col-sm-2">
+                                    <label>Data de Vencimento</label>
+                                    <input type="text" name="data" class="dataC form-control" value="" placeholder="01/2020">
+                                </div>
+
+                                <div class="form-group col-sm-2">
+                                    <label></label>
+                                    <button type="button" name="data" class="btn btn-success form-control" value="" >Financiar</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </body>
 </html>
