@@ -6,14 +6,16 @@
     }
 
     $projeto = $conexao->select('*')->from('projeto')->where("id = '".$_GET['id']."'")->executeNGet();
+    $recompensas = $conexao->select('*')->from('recompensa')->where("idprojeto = '".$_GET['id']."'")->executeNGet();
     $projeto = $projeto[0]; 
     $coordenador = $conexao->select('nome')->from('usuario')->where("id = '".$projeto['coordenador']."'")->executeNGet();
+    
 ?>
 
 <div class="row">
     <ol class="breadcrumb">
         <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-        <li class="active">Perfil</li>
+        <li class="active">Projetos</li>
     </ol>
 </div><!--/.row-->
 
@@ -25,8 +27,6 @@
             <!-- Nav tabs -->
                 <ul class="nav nav-tabs " role="tablist">
                     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-                    
                 </ul>
 
             </div>
@@ -63,27 +63,42 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
 
-                    <div role="tabpanel" class="tab-pane active" id="home">
-                        <table class='table table-boredered <table-hover></table-hover>'>
-                            <thead>
+                    <div role="tabpanel" class="tab-pane active " id="home">
+                        <table class='table table-bordered table-hover '>
+                            <thead >
                                 <tr>
-                                    <td>Recompensa</td>
-                                    <td>Descrição</td>
-                                    <td>Valor da Recompensa (R$)</td>
+                                    <th>Recompensa</th>
+                                    <th>Descrição</th>
+                                    <th>Valor (R$)</th>
+                                    <th>Limite</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php
+                                foreach($recompensas as $recompensa) {
+                                    
+                                    $qtd = $conexao->select("count(*)")->from('usuariorecompensa')->where("idrecompensa = '".$recompensa['id']."'")->executeNGet();
+                                     
+                                    ?>
                                 <tr>
-                                    <td>Chaveiro</td>
-                                    <td>Chaveiro e placa de agradecimento</td>
-                                    <td>22,00</td>
+                                    <td><?php echo $recompensa['titulo']; ?></td>
+                                    <td><?php echo $recompensa['descricao']; ?></td>
+                                    <td><?php echo $recompensa['valor']; ?></td>
+                                    <td><?php echo $qtd[0]["count(*)"]." de ".$recompensa['limite']; ?></td>
+                                    <td><a href="index_public.php?p=financiar_projeto&id=<?php echo $recompensa['id'];?>" class="btn btn-info" >Pegar</a></td>
                                 </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="profile">
-                        Profile conteudo
+                        <form>
+                            <div class="form-control">
+
+                            </div>
+                        </form>
                     </div>
                     
                 </div>

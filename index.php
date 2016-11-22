@@ -3,7 +3,11 @@ require_once('class/Usuario.class.php');
 session_start();
 
 
+<<<<<<< HEAD
 if (!isset($_SESSION['logado']) || $_SESSION['logado'] == false) {
+=======
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] == false || $_SESSION['usuario']->tipo == 'usuariopublico') {
+>>>>>>> origin/release-final
 	header("Location: index_public.php");
 }
 
@@ -52,7 +56,7 @@ if(isset($_GET['p'])){
 		case 'logout':
 			if($_GET['token'] === md5(session_id())) {
 				session_destroy();
-				header("location: login.php");
+				header("location: index_public.php");
 				break;
 			}
 		default:

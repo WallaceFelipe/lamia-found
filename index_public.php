@@ -2,6 +2,15 @@
 require_once('class/Usuario.class.php');
 session_start();
 
+if (isset($_SESSION['logado'])) {
+	$user = $_SESSION['usuario'];
+}
+
+if($_GET['p'] == 'logout' && $_GET['token'] === md5(session_id())) {
+	session_destroy();
+	header("location: index_public.php");
+	die();
+}
 
 $pagina = 'inicial_public.php';
 if(isset($_GET['p'])){
@@ -52,8 +61,18 @@ $tipos = array(
 				<a class="navbar-brand" href="#"><span>Fund</span>Razor</a>
 				<ul class="user-menu">
 					<li class=" pull-right">
-						<a href="index.php?p=login"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg></a>
-					
+					<?php if (!isset($_SESSION['logado']) || $_SESSION['logado'] == false) { ?>
+						<a href="login.php" class="btn btn-info">Login</a>
+					<?php } else { ?>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo $user->login; ?> <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="index_public.php?p=perfil"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Profile</a></li>
+							<?php if ($user->tipo != 'usuariopublico') { ?>
+								<li><a href="index.php"><svg class="glyph stroked gear"><use xlink:href="#stroked-gear"></use></svg>Área Privada</a></li>
+							<?php } ?>
+							<li><a href="index.php?p=logout&token=<?php echo md5(session_id()); ?>"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
+						</ul>
+					<?php } ?>
 					</li>
 				</ul>
 			</div>
@@ -107,6 +126,9 @@ $tipos = array(
 			$(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
 			
 			$(".data").mask('00/00/0000');
+			$(".dataC").mask('00/0000');
+			$(".card").mask('0000.0000.0000.0000');
+			$(".cvv").mask('000');
 			$(".cpf").mask('000.000.000-00');
 			$(".money").mask("#.##0,00", {reverse: true});
 

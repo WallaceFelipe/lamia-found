@@ -1,3 +1,6 @@
 class/config.ini
 class/config.ini
 /.project
+index.php
+index_public.php
+*.php
