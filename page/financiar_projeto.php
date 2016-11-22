@@ -12,6 +12,31 @@
     $recompensa = $conexao->select("*")->from("recompensa")->where("id = ".$_GET['id'])->limit(1)->executeNGet();
     $projeto = $conexao->select("*")->from("projeto")->where("id = ".$recompensa['idprojeto'])->limit(1)->executeNGet();
 
+    if (isset($_POST['financiar'])) {
+        $financiar = array(
+            'idusuario' => $user->getId(),
+            'idprojeto' => $recompensa['idprojeto'],
+            'tipo' => 'integral',
+            'valor' => $recompensa['valor'],
+            'formapagamento' => 'cartaocredito'
+        );
+        
+        $recompensar = array(
+            'financiador' => $user->getId(),
+            'idrecompensa' => $recompensa['id']
+        );
+
+        if($conexao->insert('financiar', $financiar)) {
+            if($conexao->insert('usuariorecompensa', $recompensar)) {
+                echo '<script> alert("Financiamento realizado com sucesso");
+                        window.location.href = "index_public.php";
+                    </script>';
+                die();
+            }
+        }
+
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +68,7 @@
                         </div>
                         <br>
                         <div class="row">
-                            <form>
+                            <form method="post" id="form" action="">
                                 <div class="form-group col-sm-3">
                                     <label>Número do Cartão</label>
                                     <input type="text" name="cartao" class="card form-control" value="" placeholder="1234.1234.1234.1234">
@@ -61,7 +86,7 @@
 
                                 <div class="form-group col-sm-2">
                                     <label></label>
-                                    <button type="button" name="data" class="btn btn-success form-control" value="" >Financiar</button>
+                                    <button type="submit" name="financiar" class="btn btn-success form-control" value="ok" >Financiar</button>
                                 </div>
                             </form>
                         </div>
